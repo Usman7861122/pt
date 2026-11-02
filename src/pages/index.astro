@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSlider from '../components/HeroSlider.tsx';
+import About from '../components/sections/About.astro';
+import ConditionsSection from '../components/sections/ConditionsSection.astro';
+import WomensHealth from '../components/sections/WomensHealth.astro';
+import ParallaxBand from '../components/sections/ParallaxBand.astro';
+import VideoSection from '../components/sections/VideoSection.astro';
+import Blog from '../components/sections/Blog.astro';
+import TeamPreview from '../components/sections/TeamPreview.astro';
+import TestimonialsSection from '../components/sections/TestimonialsSection.astro';
+import GallerySection from '../components/sections/GallerySection.astro';
+import Insurance from '../components/sections/Insurance.astro';
+import LocationsSection from '../components/sections/LocationsSection.astro';
+import LogoDivider from '../components/ui/LogoDivider.astro';
+import { heroSlides } from '../data/home';
+import { site } from '../data/site';
+---
+<BaseLayout lightHero>
+  <HeroSlider client:load slides={heroSlides} bookingUrl={site.bookingUrl} />
+  <About />
+  <div class="relative z-10 bg-cream"><LogoDivider class="-my-12 md:-my-16" /></div>
+  <ConditionsSection />
+  <WomensHealth />
+  <ParallaxBand />
+  <Blog />
+  <TeamPreview />
+  <TestimonialsSection />
+  <GallerySection />
+  <VideoSection />
+  <Insurance />
+  <LocationsSection />
+</BaseLayout>

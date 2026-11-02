@@ -1,0 +1,57 @@
+---
+import { site } from '../data/site';
+import { locations } from '../data/home';
+const tel = (p: string) => 'tel:' + p.replace(/[^0-9]/g, '');
+---
+<footer class="bg-navy-deep text-white">
+  <div class="border-b border-white/10">
+    <div class="mx-auto max-w-[82rem] flex flex-col items-start justify-between gap-6 px-4 py-14 md:flex-row md:items-center">
+      <p class="font-display max-w-xl text-3xl leading-tight md:text-4xl">Ready to move without pain? Let's make a plan.</p>
+      <div class="flex flex-wrap gap-3">
+        <a href={site.bookingUrl} class="btn btn-red">Book an Appointment</a>
+        <a href={tel(site.phone)} class="btn btn-ghost-light">Call {site.phone}</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-[82rem] grid gap-12 px-4 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_2fr]">
+    <div>
+      <img src="/images/Logo-white.png" alt="Performance Therapy Institute" width="938" height="195" loading="lazy" class="h-14 w-auto" />
+      <p class="mt-5 max-w-sm text-white/75">Hands-on, one-on-one physical therapy for patients age four and up. Serving Middle Tennessee since 2014.</p>
+      <div class="mt-6 flex gap-2">
+        {[['Facebook','M14 8h3V4h-3a4 4 0 00-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8a1 1 0 011-1z'],['Instagram','M7 3h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4zm5 5a4 4 0 100 8 4 4 0 000-8zm5.500-2a1 1 0 100 2 1 1 0 000-2z'],['YouTube','M3 8a3 3 0 013-3h12a3 3 0 013 3v8a3 3 0 01-3 3H6a3 3 0 01-3-3V8zm7 1v6l5-3-5-3z']].map(([n,d]) => (
+          <a href={site.social[n.toLowerCase() as 'facebook']} aria-label={n} class="grid h-11 w-11 place-items-center rounded-full border border-white/25 hover:bg-white hover:text-navy">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d={d} /></svg>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <nav aria-label="Footer">
+      <h2 class="eyebrow !text-[#ff7d85]">Explore</h2>
+      <ul class="mt-4 grid gap-1">
+        {site.footerNav.map((n) => <li><a href={n.href} class="inline-block py-1.5 text-white/85 hover:text-white hover:underline underline-offset-4">{n.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="eyebrow !text-[#ff7d85]">Locations</h2>
+      <ul class="mt-4 grid gap-6 sm:grid-cols-2">
+        {locations.map((l) => (
+          <li>
+            <p class="font-display text-xl">{l.name}</p>
+            <p class="mt-1 text-sm text-white/75">{l.address}<br />{l.city}</p>
+            <a href={tel(l.phone)} class="mt-1 inline-block py-1 text-sm font-semibold text-white hover:underline">{l.phone}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="mx-auto max-w-[82rem] flex flex-col gap-2 px-4 py-6 text-sm text-white/60 md:flex-row md:justify-between">
+      <p>&copy; {new Date().getFullYear()} {site.name}. All rights reserved.</p>
+      <p><a href="/privacy" class="hover:text-white">Privacy</a> · <a href="/terms-conditions" class="hover:text-white">Terms &amp; Conditions</a> · <a href="/accessibility" class="hover:text-white">Accessibility</a></p>
+    </div>
+  </div>
+</footer>

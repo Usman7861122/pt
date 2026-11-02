@@ -1,0 +1,15 @@
+---
+import ConditionsFlip from '../home/ConditionsFlip.tsx';
+import { featuredConditions } from '../../data/home';
+---
+<section id="conditions" class="section bg-cream">
+  <div class="container-x">
+    <div class="mx-auto max-w-3xl text-center" data-reveal>
+      <p class="eyebrow">Featured conditions</p>
+      <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-6xl">Conditions <em class="text-red">we treat.</em></h2>
+      <p class="mx-auto mt-5 max-w-xl text-lg text-muted">Hover over or tap a card to see how we can help.</p>
+    </div>
+    <div class="mt-12" data-reveal><ConditionsFlip client:visible items={featuredConditions} /></div>
+    <div class="mt-12 text-center"><a href="/conditions" class="btn btn-navy">See All Conditions We Treat</a></div>
+  </div>
+</section>

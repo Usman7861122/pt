@@ -1,0 +1,55 @@
+---
+import { posts } from '../../data/site';
+const [lead, ...rest] = posts.slice(0, 4);
+const arrow = 'M5 12h14M13 6l6 6-6 6';
+---
+<section id="blog" class="section relative overflow-hidden bg-cream py-14 md:py-20">
+  <div class="container-x">
+    <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+      <div class="max-w-2xl">
+        <p class="eyebrow">Health tips</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-6xl">Simple advice, <em class="text-red">straight from our therapists.</em></h2>
+      </div>
+      <a href="/blog" class="btn btn-ghost-dark">View all articles
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={arrow} /></svg>
+      </a>
+    </div>
+
+    <div class="mt-10 grid gap-4 lg:grid-cols-[1.15fr_1fr] lg:gap-5">
+      {lead && (
+        <a href={`/blog/${lead.slug}`} class="group relative block min-h-[26rem] overflow-hidden rounded-[10px] bg-navy-deep text-white shadow-[0_40px_70px_-40px_rgba(20,33,61,.7)]" data-reveal>
+          <img src={lead.image} alt="" loading="lazy" width="900" height="900" class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105" />
+          <span class="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/30 to-transparent" aria-hidden="true"></span>
+          <span class="absolute inset-3 rounded-[6px] border border-white/0 transition-all duration-700 group-hover:inset-4 group-hover:border-white/45" aria-hidden="true"></span>
+          <span class="absolute inset-x-7 bottom-7 block">
+            <span class="inline-block rounded-md bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[.2em] backdrop-blur">{lead.category}</span>
+            <span class="font-display mt-3 block text-2xl leading-tight md:text-[2rem]">{lead.title}</span>
+            <span class="mt-2 block max-w-lg text-[15px] leading-relaxed text-white/80">{lead.excerpt}</span>
+            <span class="mt-4 inline-flex items-center gap-2 border-b border-gold pb-1 text-sm font-semibold">Read article
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1"><path d={arrow} /></svg>
+            </span>
+          </span>
+        </a>
+      )}
+
+      <ul class="grid gap-4 lg:grid-rows-3" role="list">
+        {rest.map((p, k) => (
+          <li data-reveal style={`--d:${k * 100}ms`}>
+            <a href={`/blog/${p.slug}`} class="group grid h-full grid-cols-[7rem_1fr] items-center gap-5 rounded-[10px] border border-navy/15 bg-white/60 p-3 transition-all duration-500 hover:-translate-y-1 hover:border-gold hover:bg-white hover:shadow-[0_24px_44px_-26px_rgba(20,33,61,.45)] sm:grid-cols-[9rem_1fr]">
+              <span class="block overflow-hidden rounded-md">
+                <img src={p.image} alt="" loading="lazy" width="300" height="300" class="img-sq !rounded-none transition-transform duration-700 group-hover:scale-110" />
+              </span>
+              <span class="block pr-2">
+                <span class="text-[11px] font-semibold uppercase tracking-[.2em] text-red">{p.category}</span>
+                <span class="font-display mt-1.5 block text-[1.15rem] leading-snug text-navy sm:text-[1.3rem]">{p.title}</span>
+                <span class="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-navy/70 transition-colors group-hover:text-red">Read article
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1"><path d={arrow} /></svg>
+                </span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

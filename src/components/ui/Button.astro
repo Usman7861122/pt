@@ -1,0 +1,6 @@
+---
+interface Props { href: string; variant?: 'primary' | 'ghost'; external?: boolean }
+const { href, variant = 'primary', external = false } = Astro.props;
+const cls = variant === 'primary' ? 'bg-brand text-white' : 'border border-current';
+---
+<a href={href} class={`inline-block rounded px-5 py-3 font-medium ${cls}`} {...(external ? { target: '_blank', rel: 'noopener' } : {})}><slot /></a>

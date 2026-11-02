@@ -1,0 +1,19 @@
+---
+import { site } from '../../data/site';
+import { locations } from '../../data/home';
+---
+<section id="contact" class="section">
+  <div class="container-x grid gap-10 md:grid-cols-2">
+    <form method="post" action={site.contactApi} class="grid gap-4">
+      <h2 class="text-3xl font-medium text-navy">Request an appointment</h2>
+      <label class="grid gap-1 text-sm font-semibold">Name<input name="name" required class="rounded-[10px] border border-stone p-3 font-normal" /></label>
+      <label class="grid gap-1 text-sm font-semibold">Phone<input name="phone" class="rounded-[10px] border border-stone p-3 font-normal" /></label>
+      <label class="grid gap-1 text-sm font-semibold">Email<input name="email" type="email" required class="rounded-[10px] border border-stone p-3 font-normal" /></label>
+      <label class="grid gap-1 text-sm font-semibold">Message<textarea name="message" rows="4" class="rounded-[10px] border border-stone p-3 font-normal"></textarea></label>
+      <button class="btn btn-red justify-self-start">Send</button>
+    </form>
+    <ul class="grid gap-6">
+      {locations.map((l) => <li><p class="font-display text-xl text-navy">{l.name}</p><p>{l.address}, {l.city}</p><p>{l.phone}</p></li>)}
+    </ul>
+  </div>
+</section>

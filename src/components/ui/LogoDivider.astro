@@ -1,0 +1,13 @@
+---
+const { class: cls = '' } = Astro.props;
+---
+<div class={`container-x ${cls}`} aria-hidden="true" data-reveal>
+  <div class="mx-auto flex w-full max-w-5xl items-center gap-5 md:gap-8">
+    <span class="block h-[2px] min-w-0 flex-1 rounded-full" style="background:linear-gradient(90deg,transparent,rgba(183,157,110,.7) 35%,#b79d6e)"></span>
+    <span class="relative grid h-16 w-16 shrink-0 place-items-center rounded-full border border-gold/60 bg-cream shadow-[0_10px_30px_-12px_rgba(20,33,61,.35)] md:h-20 md:w-20">
+      <span class="absolute inset-1 rounded-full border border-gold/30"></span>
+      <img src="/images/logo-mark.png" alt="" width="223" height="176" class="relative h-7 w-auto md:h-9" loading="lazy" />
+    </span>
+    <span class="block h-[2px] min-w-0 flex-1 rounded-full" style="background:linear-gradient(270deg,transparent,rgba(183,157,110,.7) 35%,#b79d6e)"></span>
+  </div>
+</div>

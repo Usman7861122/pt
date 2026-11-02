@@ -1,0 +1,20 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LocalSection from '../../components/sections/LocalSection.astro';
+import ServicesGrid from '../../components/sections/ServicesGrid.astro';
+import { conditions } from '../../data/conditions';
+import { localFor } from '../../data/local';
+
+export function getStaticPaths() {
+  return conditions.map((c) => ({ params: { slug: c.slug }, props: { condition: c } }));
+}
+const { condition } = Astro.props;
+const c = condition.content;
+const local = localFor(condition.title, 'condition');
+---
+<PageLayout title={local.banner} eyebrow="Conditions" lede={c.intro} image={condition.image}>
+  <!-- Order: Overview, Causes, Symptoms + red flags, Diagnosis, Treatment, Living well, FAQ, LocalSection, InTheNews, Related services -->
+  <section class="py-16"><div class="mx-auto max-w-7xl px-4"><h2 class="text-2xl font-semibold">Overview</h2><p class="mt-3">{c.overview}</p></div></section>
+  <LocalSection topic={condition.title} kind="condition" />
+  <ServicesGrid title="Related services" only={c.relatedServices} />
+</PageLayout>

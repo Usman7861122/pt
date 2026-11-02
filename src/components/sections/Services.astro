@@ -1,0 +1,18 @@
+---
+import { services } from '../../data/services';
+---
+<section id="services" class="py-20">
+  <div class="mx-auto max-w-7xl px-4">
+    <h2 class="text-3xl font-semibold">Our services</h2>
+    <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {services.map((s) => (
+        <a href={`/services/${s.slug}`} class="block rounded border p-4">
+          <img src={s.image} alt={s.title} class="aspect-[4/3] w-full bg-bone object-cover" />
+          <h3 class="mt-3 font-semibold">{s.title}</h3>
+          <p class="text-sm text-ink/70">{s.summary}</p>
+          <span class="text-sm text-brand">Learn more</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

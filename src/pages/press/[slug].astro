@@ -1,0 +1,15 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { press } from '../../data/press';
+
+export function getStaticPaths() {
+  return press.map((p) => ({ params: { slug: p.slug }, props: { item: p } }));
+}
+const { item } = Astro.props;
+---
+<PageLayout title={item.title} eyebrow={item.outlet} lede={item.deck} image={item.image}>
+  <div class="mx-auto max-w-3xl px-4 py-16">
+    {item.body.map((b) => <p class="mb-4">{b}</p>)}
+    <a href={item.url} target="_blank" rel="noopener">Read the original</a>
+  </div>
+</PageLayout>

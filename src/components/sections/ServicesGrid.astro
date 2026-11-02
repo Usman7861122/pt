@@ -1,0 +1,14 @@
+---
+import { services } from '../../data/services';
+interface Props { title?: string; exclude?: string; only?: string[] }
+const { title = 'Other services', exclude, only } = Astro.props;
+const list = services.filter((s) => (only ? only.includes(s.slug) : s.slug !== exclude));
+---
+<section class="py-16">
+  <div class="mx-auto max-w-7xl px-4">
+    <h2 class="text-2xl font-semibold">{title}</h2>
+    <ul class="mt-6 grid gap-4 md:grid-cols-3">
+      {list.map((s) => <li><a class="block rounded border p-4" href={`/services/${s.slug}`}>{s.title}</a></li>)}
+    </ul>
+  </div>
+</section>

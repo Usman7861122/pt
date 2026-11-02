@@ -1,0 +1,13 @@
+---
+import { localFor } from '../../data/local';
+interface Props { topic: string; kind: 'service' | 'condition' | 'group' }
+const { topic, kind } = Astro.props;
+const l = localFor(topic, kind);
+---
+<section class="bg-bone py-16">
+  <div class="mx-auto max-w-7xl px-4">
+    <h2 class="text-2xl font-semibold">{l.sectionTitle}</h2>
+    {l.text.map((t) => <p class="mt-3 max-w-2xl">{t}</p>)}
+    <ul class="mt-4 flex flex-wrap gap-2">{l.areas.map((a) => <li class="rounded-full border px-3 py-1 text-sm">{a}</li>)}</ul>
+  </div>
+</section>

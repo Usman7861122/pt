@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens (from the logo: navy + red) ---------- */
+@theme {
+  --color-navy: #14213d;
+  --color-navy-deep: #0b1426;
+  --color-red: #c8202d;
+  --color-red-dark: #a3171f;
+  --color-cream: #f7f4ee;
+  --color-stone: #e9e5dc;
+  --color-ink: #151a26;
+  --color-muted: #566074;
+  --color-gold: #b79d6e;
+  --color-blush: #f5ebe6;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --radius-img: 10px;
+}
+
+html { scroll-behavior: smooth; }
+body { @apply bg-white text-ink font-sans antialiased; font-size: 1rem; line-height: 1.6; }
+h1, h2, h3, .font-display { font-family: var(--font-display); text-wrap: balance; }
+
+@layer components {
+/* Images: square with slightly round edges */
+.img-sq { aspect-ratio: 1 / 1; object-fit: cover; border-radius: var(--radius-img); width: 100%; display: block; }
+
+/* Focus ring everywhere */
+:focus-visible { outline: 3px solid var(--color-red); outline-offset: 3px; border-radius: 4px; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 48px; padding: .75rem 1.6rem; border-radius: 6px; font-weight: 600; font-size: .95rem; letter-spacing: .01em; transition: transform .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease; }
+.btn:active { transform: scale(.97); }
+.btn-red { background: var(--color-red); color: #fff; }
+.btn-red:hover { background: var(--color-red-dark); }
+.btn-ghost { border: 1.5px solid currentColor; }
+.btn-ghost:hover { background: #fff; color: var(--color-navy); border-color: #fff; }
+.btn-ghost-light { color: #fff; border: 1.5px solid rgba(255,255,255,.55); }
+.btn-ghost-light:hover { background: #fff; color: var(--color-navy); border-color: #fff; }
+.btn-ghost-dark { color: var(--color-navy); border: 1.5px solid rgba(20,33,61,.35); }
+.btn-ghost-dark:hover { background: var(--color-navy); color: #fff; border-color: var(--color-navy); }
+.btn-navy { background: var(--color-navy); color: #fff; }
+.btn-navy:hover { background: var(--color-navy-deep); }
+
+.eyebrow { text-transform: uppercase; letter-spacing: .22em; font-size: .75rem; font-weight: 600; color: var(--color-red); }
+.section { padding: clamp(4rem, 8vw, 7rem) 1rem; }
+.container-x { max-width: 80rem; margin-inline: auto; }
+
+}
+
+/* Fixed-window parallax (disabled on touch + reduced motion) */
+.parallax { background-attachment: fixed; background-size: cover; background-position: center; }
+@media (hover: none), (max-width: 1023px), (prefers-reduced-motion: reduce) { .parallax { background-attachment: scroll; } }
+
+.sr-only-h1 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+
+/* Scroll reveal (only when JS is on) */
+html.js [data-reveal] { opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform .8s cubic-bezier(.22,1,.36,1); transition-delay: var(--d, 0ms); }
+html.js [data-reveal].in { opacity: 1; transform: none; }
+
+@layer components {
+  .eyebrow { display: inline-flex; align-items: center; gap: .9rem; }
+  .eyebrow::before { content: ""; width: 2.25rem; height: 1px; background: var(--color-gold); }
+  .eyebrow-light { color: var(--color-gold); }
+
+  .link-arrow { display: inline-flex; align-items: center; gap: .7rem; position: relative; padding-bottom: .4rem; font-weight: 600; letter-spacing: .02em; }
+  .link-arrow::after { content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%; background: currentColor; opacity: .3; transition: opacity .3s ease; }
+  .link-arrow:hover::after { opacity: 1; }
+  .link-arrow svg { transition: transform .35s cubic-bezier(.22,1,.36,1); }
+  .link-arrow:hover svg { transform: translateX(6px); }
+
+  /* Cursor spotlight layers (use inside [data-spot] or an element that sets --x / --y) */
+  .spot-dots, .spot-glow { position: absolute; inset: 0; pointer-events: none; z-index: 0; transition: opacity .6s ease; }
+  .spot-dots { opacity: 0; background-image: radial-gradient(circle, currentColor 1.1px, transparent 1.4px); background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(280px circle at var(--x, 50%) var(--y, 50%), #000 0%, transparent 70%);
+            mask-image: radial-gradient(280px circle at var(--x, 50%) var(--y, 50%), #000 0%, transparent 70%); }
+  .spot-glow { background: radial-gradient(560px circle at var(--x, 50%) var(--y, 50%), var(--glow, rgba(200,32,45,.10)), transparent 60%); opacity: 0; }
+  [data-spot]:hover .spot-dots, [data-spot]:hover .spot-glow { opacity: 1; }
+  @media (hover: none) { .spot-glow { opacity: 1; } }
+
+  .grain::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .06; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+}
+
+@layer components {
+  .fan-layout { height: 22rem; }
+  .fan-card {
+    position: absolute; left: 50%; top: 50%;
+    width: 7.5rem; height: 10rem; margin: -5rem 0 0 -3.75rem;
+    overflow: hidden; border-radius: var(--radius-img); background: var(--color-navy);
+    box-shadow: 0 30px 50px -20px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.12);
+    will-change: transform; user-select: none;
+  }
+  @media (min-width: 480px) { .fan-layout { height: 26rem; } .fan-card { width: 9rem; height: 12rem; margin: -6rem 0 0 -4.5rem; } }
+  @media (min-width: 640px) { .fan-layout { height: 28rem; } .fan-card { width: 11rem; height: 14.5rem; margin: -7.25rem 0 0 -5.5rem; } }
+  @media (min-width: 768px) { .fan-layout { height: 34rem; } .fan-card { width: 13rem; height: 17.5rem; margin: -8.75rem 0 0 -6.5rem; } }
+  @media (min-width: 1024px) { .fan-layout { height: 38rem; } .fan-card { width: 16rem; height: 21.5rem; margin: -10.75rem 0 0 -8rem; } }
+}

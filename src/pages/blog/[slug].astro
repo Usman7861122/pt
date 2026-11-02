@@ -1,0 +1,15 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { posts } from '../../data/site';
+
+export function getStaticPaths() {
+  return posts.map((p) => ({ params: { slug: p.slug }, props: { post: p } }));
+}
+const { post } = Astro.props;
+---
+<PageLayout title={post.title} eyebrow={post.category} lede={post.excerpt} image={post.image}>
+  <article class="mx-auto max-w-3xl px-4 py-16">
+    <p>{post.date} · {post.readTime}</p>
+    <Fragment set:html={post.body ?? ''} />
+  </article>
+</PageLayout>

@@ -1,0 +1,19 @@
+---
+import LocationsToggle from '../home/LocationsToggle.tsx';
+import { locations } from '../../data/home';
+import { site } from '../../data/site';
+---
+<section id="locations" data-spot class="section relative isolate overflow-hidden bg-navy-deep text-white grain" style="--glow: rgba(200,32,45,.12)">
+  <div class="spot-dots text-white/40" aria-hidden="true"></div>
+  <div class="spot-glow" aria-hidden="true"></div>
+  <div class="container-x relative z-10">
+    <div class="grid items-end gap-8 lg:grid-cols-2" data-reveal>
+      <div>
+        <p class="eyebrow eyebrow-light">Our locations</p>
+        <h2 class="mt-5 text-[clamp(2.6rem,5vw,4.6rem)] font-medium leading-[1.04] tracking-tight">Four clinics, <em class="text-[#ff7d85]">close to home.</em></h2>
+      </div>
+      <p class="max-w-md text-lg text-white/70 lg:justify-self-end">Choose a clinic to see its address, phone number and photos of the clinic. Every location offers one-on-one care.</p>
+    </div>
+    <div class="mt-14" data-reveal><LocationsToggle client:visible locations={locations} hours={site.hours} bookingUrl={site.bookingUrl} /></div>
+  </div>
+</section>

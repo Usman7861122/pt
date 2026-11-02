@@ -1,0 +1,28 @@
+---
+import { site } from '../../data/site';
+import { insurance } from '../../data/home';
+---
+<section id="insurance" class="section bg-cream">
+  <div class="container-x">
+    <div class="grid items-end gap-8 lg:grid-cols-2" data-reveal>
+      <div>
+        <p class="eyebrow">Insurance</p>
+        <h2 class="mt-4 text-4xl font-medium leading-[1.08] text-navy md:text-6xl">We accept most plans, <em class="text-red">so you can focus on healing.</em></h2>
+      </div>
+      <p class="max-w-md text-lg text-muted lg:justify-self-end">We check your benefits before your first visit, so there are no surprises. MedPay from auto insurance and attorney liens are accepted at all four clinics.</p>
+    </div>
+    <ul class="mt-14 grid grid-cols-2 border-l border-t border-navy/10 md:grid-cols-4" data-reveal>
+      {insurance.map((i) => (
+        <li class="group grid h-32 place-items-center border-b border-r border-navy/10 bg-white/0 p-6 transition-colors duration-500 hover:bg-white md:h-40">
+          <img src={i.logo} alt={i.name} loading="lazy" class="max-h-14 mix-blend-multiply w-auto max-w-[80%] object-contain opacity-60 grayscale transition-all duration-500 group-hover:scale-105 group-hover:opacity-100 group-hover:grayscale-0 md:max-h-16" />
+        </li>
+      ))}
+    </ul>
+    <div class="mt-10 flex flex-wrap items-center gap-3">
+      <a href={site.bookingUrl} class="btn btn-red">Check My Coverage</a>
+      <a href={`tel:${site.phone.replace(/[^0-9]/g, '')}`} class="btn btn-ghost-dark">Call {site.phone}
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </a>
+    </div>
+  </div>
+</section>
