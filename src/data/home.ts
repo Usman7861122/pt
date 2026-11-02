@@ -1,10 +1,10 @@
 export const heroSlides = [
-  { image: '/images/nolensville/nolensville-09.webp', position: '50% 50%', alt: 'The Nolensville clinic treatment area with the Performance Therapy Institute logo on the wall',
-    eyebrow: 'Since 2014', words: ['Reclaim', 'Your', 'Life.'],
-    sub: 'From the first visit to full recovery, we stay with you.' },
   { image: '/images/brentwood/brentwood-02.webp', position: '50% 50%', alt: 'The open, bright therapy gym at our Brentwood clinic',
     eyebrow: 'One-on-one sessions', words: ['Relieve', 'Pain.'],
     sub: 'A plan built around your goals, not a fixed script.' },
+  { image: '/images/nolensville/nolensville-09.webp', position: '50% 50%', alt: 'The Nolensville clinic treatment area with the Performance Therapy Institute logo on the wall',
+    eyebrow: 'Since 2014', words: ['Reclaim', 'Your', 'Life.'],
+    sub: 'From the first visit to full recovery, we stay with you.' },
   { image: '/images/coolsprings/coolsprings-people-07.webp', position: '50% 50%', alt: 'A therapist and a patient talking about the plan for recovery',
     eyebrow: 'Brentwood · Nashville · Nolensville', words: ['Restore', 'Movement.'],
     sub: 'Hands-on care from licensed therapists who listen first.' },
