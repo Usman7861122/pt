@@ -1,0 +1,56 @@
+---
+import { stats } from '../../data/home';
+---
+<section class="section relative overflow-hidden bg-cream">
+  <div class="container-x grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-20">
+    <div data-reveal>
+      <p class="eyebrow">Who we are</p>
+      <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">A full-service physical therapy practice, <em class="text-red">since 2014.</em></h2>
+      <div class="mt-6 space-y-5 text-lg leading-relaxed text-navy/75">
+        <p>Performance Therapy Institute has offices in Brentwood, Midtown Nashville and Nolensville, Tennessee, plus a lymphedema and cancer care location in Brentwood. We care for patients age four and older, we accept most health insurance plans, and we are accepting new patients.</p>
+        <p>Our doctors of physical therapy bring more than 100 years of combined experience to every visit. Doctors across Middle Tennessee, including general practitioners, orthopedists and neurologists, trust us with their patients.</p>
+      </div>
+      <div class="mt-9 flex flex-wrap gap-3">
+        <a href="/#contact" class="btn btn-red">Request an Appointment</a>
+        <a href="/team" class="btn btn-ghost-dark">Meet Our Team</a>
+      </div>
+    </div>
+    <div class="relative pb-8 pr-8" data-reveal style="--d:120ms">
+      <div aria-hidden="true" class="absolute bottom-0 right-0 top-8 w-[calc(100%-2rem)] rounded-[10px] border border-gold/70"></div>
+      <div class="relative aspect-video overflow-hidden rounded-[10px] bg-navy-deep shadow-[0_50px_90px_-40px_rgba(20,33,61,.6)]" data-yt="SZ4ok64GbEc">
+        <button type="button" class="yt-play group absolute inset-0 block h-full w-full" aria-label="Play video: Performance Therapy Rev">
+          <img src="https://i.ytimg.com/vi/SZ4ok64GbEc/maxresdefault.jpg" alt="" loading="lazy" class="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" />
+          <span class="absolute inset-0 bg-gradient-to-t from-navy-deep/80 via-navy-deep/10 to-transparent"></span>
+          <span class="absolute left-1/2 top-1/2 grid h-20 w-20 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/70 bg-white/10 text-white backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:border-red group-hover:bg-red">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+          </span>
+          <span class="absolute bottom-5 left-5 text-left text-white"><span class="eyebrow eyebrow-light block">Watch</span><span class="font-display mt-1 block text-xl">Performance Therapy Rev</span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="container-x mt-16">
+    <dl class="grid grid-cols-2 gap-3 md:grid-cols-4">
+      {stats.map((s) => (
+        <div class="group relative overflow-hidden rounded-lg border border-navy/15 bg-white/60 p-5 transition-all duration-500 hover:-translate-y-1.5 hover:border-gold hover:bg-white hover:shadow-[0_28px_44px_-28px_rgba(20,33,61,.5)]" data-reveal><span aria-hidden="true" class="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-gold to-red transition-transform duration-700 group-hover:scale-x-100"></span>
+          <dd class="font-display text-4xl text-navy transition-colors duration-300 group-hover:text-red md:text-5xl">{s.value}</dd>
+          <dt class="mt-3 border-t border-navy/10 pt-3 text-[11px] uppercase leading-snug tracking-[.14em] text-muted">{s.label}</dt>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-yt]').forEach((box) => {
+    box.querySelector('.yt-play')?.addEventListener('click', () => {
+      const f = document.createElement('iframe');
+      f.src = `https://www.youtube-nocookie.com/embed/${box.dataset.yt}?autoplay=1&rel=0`;
+      f.title = 'Performance Therapy Institute video';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      f.allowFullscreen = true;
+      f.className = 'absolute inset-0 h-full w-full';
+      box.replaceChildren(f);
+    });
+  });
+</script>

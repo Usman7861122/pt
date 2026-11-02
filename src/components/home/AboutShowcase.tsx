@@ -66,7 +66,7 @@ export default function AboutShowcase({ stats }: { stats: Stat[] }) {
             Care that treats <em className="text-red">you</em>, not just your pain.
           </motion.h2>
           <motion.p initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.2 }} className="mt-7 max-w-xl text-xl leading-relaxed text-navy/80">
-            We are a full-service physical therapy clinic with offices in Brentwood, Cool Springs, Midtown Nashville and Nolensville. Our doctors of physical therapy bring more than 100 years of combined experience to every visit.
+            We are a full-service physical therapy clinic with offices in Brentwood, Midtown Nashville and Nolensville, plus a lymphedema and cancer care location in Brentwood. Our doctors of physical therapy bring more than 100 years of combined experience to every visit.
           </motion.p>
           <motion.p initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.28 }} className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
             We combine hands-on therapy, simple teaching and strengthening exercises, so you get stronger, move easier and lower your risk of falls. We accept most insurance plans.

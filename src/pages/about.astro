@@ -1,11 +1,29 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
-import About from '../components/sections/About.astro';
-import LegacyBand from '../components/sections/LegacyBand.astro';
-import Credentials from '../components/sections/Credentials.astro';
-import WhyChoose from '../components/sections/WhyChoose.astro';
+import AboutIntro from '../components/about/AboutIntro.astro';
+import Approach from '../components/about/Approach.astro';
+import Treatments from '../components/about/Treatments.astro';
+import Referral from '../components/about/Referral.astro';
+import FirstVisit from '../components/about/FirstVisit.astro';
+import CtaBand from '../components/about/CtaBand.astro';
+import TeamPreview from '../components/sections/TeamPreview.astro';
 import TestimonialsSection from '../components/sections/TestimonialsSection.astro';
+import LocationsSection from '../components/sections/LocationsSection.astro';
 ---
-<PageLayout title="About us" eyebrow="Our team">
-  <About /><LegacyBand /><Credentials /><WhyChoose /><TestimonialsSection />
+<PageLayout
+  title="About" accent="Performance Therapy Institute"
+  eyebrow="Our story"
+  lede="Hands-on, one-on-one physical therapy in Brentwood, Midtown Nashville and Nolensville."
+  description="Performance Therapy Institute is a full-service physical therapy practice serving Middle Tennessee since 2014. Meet our team, learn our approach and find a clinic near you."
+  image="/images/brentwood/brentwood-02.webp"
+>
+  <AboutIntro />
+  <Approach />
+  <Treatments />
+  <Referral />
+  <FirstVisit />
+  <TeamPreview />
+  <TestimonialsSection />
+  <LocationsSection />
+  <CtaBand />
 </PageLayout>

@@ -1,0 +1,54 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import VideoSection from '../components/sections/VideoSection.astro';
+import { videos } from '../data/videos';
+import { site } from '../data/site';
+
+const tel = `tel:${site.phone.replace(/[^0-9]/g, '')}`;
+---
+<PageLayout
+  title="Treatments" accent="on video"
+  eyebrow="Watch"
+  lede="Short, easy-to-follow clips of the treatments and exercises we use every day at our clinics."
+  description="Watch treatment and exercise videos from Performance Therapy Institute in Brentwood, Midtown Nashville and Nolensville, TN: dry needling, manual therapy, balance work and more."
+  image="/images/brentwood/brentwood-people-14.webp" sideImage="/images/brentwood/brentwood-people-14.webp" sideAlt="A patient doing a balance exercise in the Brentwood therapy gym"
+>
+  <VideoSection />
+
+  <section class="section bg-cream">
+    <div class="container-x">
+      <div class="max-w-2xl" data-reveal>
+        <p class="eyebrow">All {videos.length} videos</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">What each clip <em class="text-red">shows.</em></h2>
+      </div>
+      <ul class="mt-10 grid gap-4 md:grid-cols-2" role="list">
+        {videos.map((v, k) => (
+          <li data-reveal style={`--d:${(k % 2) * 90}ms`}>
+            <a href="#videos" class="group grid h-full grid-cols-[5rem_1fr] items-center gap-5 rounded-[10px] border border-navy/15 bg-white p-3 transition-all duration-500 hover:border-red hover:shadow-[0_24px_44px_-26px_rgba(20,33,61,.45)]">
+              <span class="block overflow-hidden rounded-md"><img src={v.poster} alt="" loading="lazy" width="160" height="285" class="aspect-[9/12] w-full object-cover transition-transform duration-700 group-hover:scale-110" /></span>
+              <span class="block pr-2">
+                <span class="font-display block text-[1.25rem] leading-snug text-navy">{v.title}</span>
+                <span class="mt-1 block text-[15px] leading-relaxed text-muted">{v.text}</span>
+                {v.length && <span class="mt-2 block text-xs font-semibold uppercase tracking-wider text-navy/50">{v.length}</span>}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section data-spot class="section grain relative isolate overflow-hidden bg-navy-deep text-white" style="--glow: rgba(255,126,134,.12)">
+    <div class="spot-dots text-white/40" aria-hidden="true"></div>
+    <div class="spot-glow" aria-hidden="true"></div>
+    <div class="container-x relative z-10 mx-auto max-w-3xl text-center" data-reveal>
+      <p class="eyebrow eyebrow-light">Try it in person</p>
+      <h2 class="mt-5 text-4xl font-medium leading-[1.06] md:text-5xl">Want this care <em class="text-[#FF7E86]">for you?</em></h2>
+      <p class="mx-auto mt-5 max-w-xl text-lg text-white/70">Videos are a taste. Your therapist will pick the right treatments for your body and guide you step by step.</p>
+      <div class="mt-9 flex flex-wrap justify-center gap-3">
+        <a href={site.bookingUrl} class="btn btn-red">Request an Appointment</a>
+        <a href={tel} class="btn btn-ghost-light">Call {site.phone}</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>

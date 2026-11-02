@@ -1,0 +1,50 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { site } from '../../data/site';
+
+interface Section { id: string; title: string; html: string }
+interface Props { title: string; accent?: string; description: string; updated: string; sections: Section[]; lede?: string }
+const { title, accent, description, updated, sections, lede } = Astro.props;
+
+const docs = [
+  ['Privacy Policy', '/privacy'], ['Notice of Privacy Practices', '/notice-of-privacy-practices'], ['Terms & Conditions', '/terms-conditions'],
+  ['Cookie Policy', '/cookie-policy'], ['Accessibility', '/accessibility'],
+];
+const here = Astro.url.pathname.replace(/\/$/, '');
+---
+<PageLayout title={title} accent={accent} eyebrow="Legal" lede={lede ?? `Last updated ${updated}`} description={description}>
+  <section class="section bg-cream">
+    <div class="container-x grid gap-12 lg:grid-cols-[17rem_1fr] lg:gap-16">
+      <aside class="lg:sticky lg:top-28 lg:self-start">
+        <nav aria-label="On this page" class="rounded-[10px] border border-navy/15 bg-white p-6">
+          <p class="eyebrow">On this page</p>
+          <ol class="mt-4 space-y-2 text-[15px]">
+            {sections.map((s, i) => (
+              <li><a href={`#${s.id}`} class="flex gap-2 text-navy/75 transition-colors hover:text-red"><span class="text-navy/35">{i + 1}.</span><span>{s.title}</span></a></li>
+            ))}
+          </ol>
+        </nav>
+        <nav aria-label="Other legal pages" class="mt-6 rounded-[10px] border border-navy/15 bg-white p-6">
+          <p class="eyebrow">Other policies</p>
+          <ul class="mt-4 space-y-2 text-[15px]" role="list">
+            {docs.map(([l, h]) => (
+              <li><a href={h} aria-current={h === here ? 'page' : undefined} class={`transition-colors hover:text-red ${h === here ? 'font-semibold text-navy' : 'text-navy/75'}`}>{l}</a></li>
+            ))}
+            <li><button type="button" data-cookie-settings class="text-left text-navy/75 underline decoration-red decoration-2 underline-offset-4 transition-colors hover:text-red">Cookie settings</button></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <article class="article max-w-3xl">
+        <p class="!text-sm !text-navy/55">Last updated {updated}</p>
+        {sections.map((s, i) => (
+          <section id={s.id} class="scroll-mt-28">
+            <h2>{i + 1}. {s.title}</h2>
+            <Fragment set:html={s.html} />
+          </section>
+        ))}
+        <p class="mt-12 !text-sm !text-navy/55">Questions about this page? Call us at <a href={`tel:${site.phone.replace(/[^0-9]/g, '')}`}>{site.phone}</a> or use the <a href="/#contact">contact form</a>.</p>
+      </article>
+    </div>
+  </section>
+</PageLayout>

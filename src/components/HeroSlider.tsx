@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
 type Slide = { image: string; position: string; alt: string; eyebrow: string; words: string[]; sub: string };
 const DURATION = 7000;
 
 export default function HeroSlider({ slides, bookingUrl }: { slides: Slide[]; bookingUrl: string }) {
+  const started = useRef(false); // first slide shows at once (good for speed) and still starts zooming
+  useEffect(() => { started.current = true; }, []);
   const [i, setI] = useState(0);
   const [paused, setPaused] = useState(false);
   const reduce = useReducedMotion();
@@ -33,7 +35,7 @@ export default function HeroSlider({ slides, bookingUrl }: { slides: Slide[]; bo
       <h1 className="sr-only-h1">Performance Therapy Institute: physical therapy in Brentwood, Nashville and Nolensville, TN</h1>
 
       {/* Background slides */}
-      <AnimatePresence initial={false}>
+      <AnimatePresence>
         <motion.img
           key={i}
           src={s.image}
@@ -43,10 +45,10 @@ export default function HeroSlider({ slides, bookingUrl }: { slides: Slide[]; bo
           fetchPriority={i === 0 ? 'high' : 'auto'}
           className="absolute inset-0 -z-20 h-full w-full object-cover"
           style={{ objectPosition: s.position }}
-          initial={{ opacity: 0, scale: reduce ? 1 : 1.12 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: started.current ? 0 : 1, scale: 1 }}
+          animate={{ opacity: 1, scale: reduce ? 1 : 1.12 }}
           exit={{ opacity: 0 }}
-          transition={{ opacity: { duration: 1.1 }, scale: { duration: DURATION / 1000 + 1.5, ease: 'linear' } }}
+          transition={{ opacity: { duration: 1.1 }, scale: { duration: DURATION / 1000 + 2, ease: 'easeOut' } }}
         />
       </AnimatePresence>
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-deep/80 via-navy-deep/40 to-transparent" />
@@ -70,7 +72,7 @@ export default function HeroSlider({ slides, bookingUrl }: { slides: Slide[]; bo
                 {s.words.map((w, k) => (
                   <span key={w + k} className="mr-[.25em] inline-block overflow-hidden pb-[.12em] align-bottom">
                     <motion.span
-                      className={`inline-block ${k === s.words.length - 1 ? 'italic text-[#ff7d85]' : ''}`}
+                      className={`inline-block ${k === s.words.length - 1 ? 'italic text-[#FF7E86]' : ''}`}
                       initial={{ y: reduce ? 0 : '110%', opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ duration: 0.8, delay: 0.25 + k * 0.14, ease: [0.22, 1, 0.36, 1] }}

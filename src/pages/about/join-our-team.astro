@@ -1,0 +1,118 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { site } from '../../data/site';
+import { locations } from '../../data/home';
+
+// Intro text comes from the old website. Role types, perks wording and form fields are drafts. TODO: confirm with the clinic and connect the form (site.contactApi).
+const values = [
+  { t: 'Drive and passion', d: 'We welcome people who want to help others and take on new challenges.', i: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z' },
+  { t: 'Exceptional results', d: 'Our focus is great care for every patient, every visit.', i: 'M20 6L9 17l-5-5' },
+  { t: 'Always learning', d: 'We learn new techniques and keep advancing what we can do.', i: 'M22 10L12 5 2 10l10 5 10-5zM6 12v5c3 2 9 2 12 0v-5' },
+  { t: 'A strong team', d: 'An exceptional team environment where people lift each other up.', i: 'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.9M16 3.1a4 4 0 010 7.800' },
+];
+const roles = [
+  { t: 'Therapy staff', d: 'Physical therapists, assistants and other therapy professionals who care about their patients and their craft.' },
+  { t: 'Administrative staff', d: 'Front office and billing team members who help patients feel welcome and keep the clinic running smoothly.' },
+];
+const field = 'w-full rounded-[10px] border border-navy/20 bg-white px-4 py-3 text-navy outline-none transition focus:border-red focus:ring-2 focus:ring-red/30';
+---
+<PageLayout
+  title="Join"
+  accent="our team"
+  eyebrow="Careers"
+  lede="We are always accepting resumes from therapy and administrative staff who want to help others."
+  description="Join Performance Therapy Institute in Brentwood, Midtown Nashville or Nolensville. We welcome therapy and administrative staff with drive, passion and a desire to help others."
+  image="/images/coolsprings/coolsprings-people-15.webp"
+>
+  <!-- Intro -->
+  <section class="section bg-cream">
+    <div class="container-x grid gap-14 lg:grid-cols-[1.1fr_.9fr] lg:gap-20">
+      <div data-reveal>
+        <p class="eyebrow">Work with us</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Help patients across Middle Tennessee <em class="text-red">be pain-free.</em></h2>
+        <div class="mt-6 space-y-5 text-lg leading-relaxed text-navy/75">
+          <p>Performance Therapy Institute is committed to helping patients in Nashville, Brentwood and Nolensville be pain-free. We only welcome people into our practice who have the drive, passion and enthusiasm for helping the patients we serve.</p>
+          <p>Our expanding practice offers plenty of chances for further education and career growth. Think you might be a fit? Call one of our clinics or send us the form below.</p>
+        </div>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a href="#apply" class="btn btn-red">Apply now</a>
+          <a href="/team" class="btn btn-ghost-dark">Meet the team</a>
+        </div>
+      </div>
+      <ul class="grid gap-4" role="list">
+        {roles.map((r, k) => (
+          <li data-reveal style={`--d:${k * 100}ms`} class="group relative overflow-hidden rounded-[10px] border border-navy/15 bg-white/60 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-red hover:bg-white hover:shadow-[0_30px_50px_-30px_rgba(20,33,61,.45)]">
+            <span aria-hidden="true" class="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-gold to-red transition-transform duration-700 group-hover:scale-x-100"></span>
+            <p class="eyebrow">We are hiring</p>
+            <h3 class="font-display mt-4 text-3xl text-navy">{r.t}</h3>
+            <p class="mt-3 text-[15px] leading-relaxed text-navy/70">{r.d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section data-spot class="section grain relative isolate overflow-hidden bg-navy-deep text-white" style="--glow: rgba(255,126,134,.12)">
+    <div class="spot-dots text-white/40" aria-hidden="true"></div>
+    <div class="spot-glow" aria-hidden="true"></div>
+    <div class="container-x relative z-10">
+      <div class="mx-auto max-w-3xl text-center" data-reveal>
+        <p class="eyebrow eyebrow-light">Why join us</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] md:text-6xl">What we look for, <em class="text-[#FF7E86]">and what you get.</em></h2>
+      </div>
+      <ul class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" role="list">
+        {values.map((v, k) => (
+          <li data-reveal style={`--d:${k * 80}ms`} class="group rounded-[10px] border border-white/15 bg-white/[.04] p-7 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-[#FF7E86]/70 hover:bg-white/[.08]">
+            <span class="grid h-12 w-12 place-items-center rounded-[10px] border border-[#FF7E86]/60 bg-[#FF7E86]/10 text-[#FF7E86] transition-colors duration-300 group-hover:border-[#FF7E86] group-hover:bg-[#FF7E86] group-hover:text-navy-deep">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={v.i} /></svg>
+            </span>
+            <h3 class="font-display mt-6 text-2xl">{v.t}</h3>
+            <p class="mt-3 text-[15px] leading-relaxed text-white/70">{v.d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Apply -->
+  <section id="apply" class="section bg-white">
+    <div class="container-x grid gap-14 lg:grid-cols-[1fr_.8fr] lg:gap-20">
+      <form method="post" action={site.contactApi} enctype="multipart/form-data" class="grid gap-5 rounded-[10px] border border-navy/15 bg-cream/60 p-8 md:p-10" data-reveal>
+        <div>
+          <p class="eyebrow">Apply</p>
+          <h2 class="mt-4 text-3xl font-medium text-navy md:text-4xl">Send us your <em class="text-red">resume.</em></h2>
+        </div>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="grid gap-1.5 text-sm font-semibold text-navy">Full name<input name="name" required autocomplete="name" class={field} /></label>
+          <label class="grid gap-1.5 text-sm font-semibold text-navy">Phone<input name="phone" type="tel" autocomplete="tel" class={field} /></label>
+        </div>
+        <label class="grid gap-1.5 text-sm font-semibold text-navy">Email<input name="email" type="email" required autocomplete="email" class={field} /></label>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="grid gap-1.5 text-sm font-semibold text-navy">I am interested in
+            <select name="role" class={field}><option>Therapy staff</option><option>Administrative staff</option><option>Not sure yet</option></select>
+          </label>
+          <label class="grid gap-1.5 text-sm font-semibold text-navy">Preferred clinic
+            <select name="clinic" class={field}><option>Any clinic</option>{locations.map((l) => <option>{l.name}</option>)}</select>
+          </label>
+        </div>
+        <label class="grid gap-1.5 text-sm font-semibold text-navy">Resume<input name="resume" type="file" accept=".pdf,.doc,.docx" class={`${field} file:mr-4 file:rounded-[6px] file:border-0 file:bg-navy file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white`} /></label>
+        <label class="grid gap-1.5 text-sm font-semibold text-navy">Tell us about yourself<textarea name="message" rows="4" class={field}></textarea></label>
+        <button type="submit" class="btn btn-red justify-self-start">Send application</button>
+      </form>
+
+      <div data-reveal style="--d:120ms">
+        <p class="eyebrow">Or call a clinic</p>
+        <ul class="mt-6 grid gap-3" role="list">
+          {locations.map((l) => (
+            <li class="rounded-[10px] border border-navy/15 p-5">
+              <p class="font-display text-xl text-navy">{l.name}</p>
+              <p class="mt-1 text-sm text-muted">{l.address}, {l.city}</p>
+              <a href={`tel:${l.phone.replace(/[^0-9]/g, '')}`} class="btn btn-ghost-dark mt-3 !min-h-[40px] !px-4 !py-2 text-sm">Call {l.phone}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+</PageLayout>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-type Loc = { id: string; name: string; address: string; city: string; phone: string; fax: string; image: string };
+type Loc = { id: string; name: string; address: string; city: string; phone: string; fax: string; image: string; hours?: string };
 
 const Arrow = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
@@ -46,9 +46,10 @@ export default function LocationsToggle({ locations, hours, bookingUrl }: { loca
                         <dt className="text-xs uppercase tracking-[.2em] text-gold sm:pt-1">Fax</dt>
                         <dd className="text-white/75">{l.fax}</dd>
                         <dt className="text-xs uppercase tracking-[.2em] text-gold sm:pt-1">Hours</dt>
-                        <dd className="text-white/75">{hours}</dd>
+                        <dd className="text-white/75">{l.hours ?? hours}</dd>
                       </dl>
                       <div className="mt-7 flex flex-wrap gap-3">
+                        <a href={`/locations/${l.id}`} className="btn btn-ghost-light">Clinic details</a>
                         <a href={bookingUrl} className="btn btn-red">Book at {l.name}</a>
                         <a href={`https://www.google.com/maps/dir/?api=1&destination=${query}`} target="_blank" rel="noopener" className="btn btn-ghost-light">Get Directions</a>
                       </div>

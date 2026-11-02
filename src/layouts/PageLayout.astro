@@ -3,12 +3,12 @@ import BaseLayout from './BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 
 interface Props {
-  title: string; eyebrow?: string; lede?: string; description?: string;
-  image?: string; imageAlt?: string; position?: string; noindex?: boolean;
+  title: string; accent?: string; eyebrow?: string; lede?: string; description?: string;
+  image?: string; imageAlt?: string; position?: string; sideImage?: string; sideAlt?: string; nearby?: string; noindex?: boolean;
 }
-const { title, eyebrow, lede, description, image, imageAlt, position, noindex } = Astro.props;
+const { title, accent, eyebrow, lede, description, image, imageAlt, position, sideImage, sideAlt, nearby, noindex } = Astro.props;
 ---
-<BaseLayout title={title} description={description} noindex={noindex} lightHero>
-  <PageHero {title} {eyebrow} {lede} {image} imageAlt={imageAlt || `${title} at our clinic`} {position} />
+<BaseLayout title={accent ? `${title} ${accent}` : title} description={description} noindex={noindex} lightHero>
+  <PageHero {title} {accent} {eyebrow} {lede} {image} imageAlt={imageAlt || `${title} at our clinic`} {position} {sideImage} {sideAlt} {nearby} />
   <slot />
 </BaseLayout>

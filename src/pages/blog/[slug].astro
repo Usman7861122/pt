@@ -1,15 +1,45 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
-import { posts } from '../../data/site';
+import { posts, site } from '../../data/site';
+import { postBodies } from '../../data/postBodies';
 
 export function getStaticPaths() {
   return posts.map((p) => ({ params: { slug: p.slug }, props: { post: p } }));
 }
-const { post } = Astro.props;
+const { post } = Astro.props as any;
+const body = postBodies[post.slug] ?? post.body ?? '';
+const mins = Math.max(1, Math.round(body.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length / 200));
+const when = new Date(post.date + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+const more = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
+const tel = `tel:${site.phone.replace(/[^0-9]/g, '')}`;
 ---
-<PageLayout title={post.title} eyebrow={post.category} lede={post.excerpt} image={post.image}>
-  <article class="mx-auto max-w-3xl px-4 py-16">
-    <p>{post.date} · {post.readTime}</p>
-    <Fragment set:html={post.body ?? ''} />
-  </article>
+<PageLayout title={post.title} eyebrow={`Blog · ${post.category}`} lede={`${when} · ${mins} min read`} description={post.excerpt} image={post.image} sideImage={post.image} sideAlt="">
+  <section class="section bg-cream">
+    <div class="container-x grid gap-12 lg:grid-cols-[1fr_20rem] lg:gap-16">
+      <article class="article max-w-3xl" data-reveal>
+        <p class="font-display text-[1.35rem] leading-snug text-navy">{post.excerpt}</p>
+        <div class="mt-8" set:html={body}></div>
+        <a href="/blog" class="btn btn-ghost-dark mt-12">← All articles</a>
+      </article>
+
+      <aside class="space-y-6 lg:sticky lg:top-28 lg:self-start">
+        <div class="rounded-[10px] bg-navy-deep p-7 text-white">
+          <p class="eyebrow eyebrow-light">Need help?</p>
+          <p class="font-display mt-4 text-2xl leading-snug">Talk to a therapist about your pain.</p>
+          <div class="mt-6 flex flex-col gap-3">
+            <a href={site.bookingUrl} class="btn btn-red">Request an Appointment</a>
+            <a href={tel} class="btn btn-ghost-light">Call {site.phone}</a>
+          </div>
+        </div>
+        <div class="rounded-[10px] border border-navy/15 bg-white p-7">
+          <p class="eyebrow">More to read</p>
+          <ul class="mt-4 divide-y divide-navy/10" role="list">
+            {more.map((p) => (
+              <li><a href={`/blog/${p.slug}`} class="block py-3 font-display text-[1.1rem] leading-snug text-navy transition-colors hover:text-red">{p.title}</a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
 </PageLayout>

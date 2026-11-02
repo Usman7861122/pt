@@ -9,14 +9,14 @@ import { team } from '../../data/home';
   <div class="container-x relative z-10">
     <div class="mx-auto max-w-3xl text-center" data-reveal>
       <p class="eyebrow eyebrow-light">Our team</p>
-      <h2 class="mt-5 text-[clamp(2.6rem,4.8vw,4.6rem)] font-medium leading-[1.04] tracking-tight">The hands behind <em class="text-[#ff7d85]">your recovery.</em></h2>
+      <h2 class="mt-5 text-[clamp(2.6rem,4.8vw,4.6rem)] font-medium leading-[1.04] tracking-tight">The hands behind <em class="text-[#FF7E86]">your recovery.</em></h2>
       <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/70">Doctors of physical therapy with more than 100 years of experience combined. Get to know some of the people who will care for you.</p>
     </div>
 
     <ul class="mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3" role="list">
       {team.map((m, k) => (
         <li data-reveal style={`--d:${(k % 3) * 120}ms`}>
-          <a href="/team" class="group block focus-visible:outline-offset-8" aria-label={`${m.name}, ${m.title}`}>
+          <a href={`/team/${m.name.toLowerCase().replace(/[^a-z]+/g,'-')}`} class="group block focus-visible:outline-offset-8" aria-label={`${m.name}, ${m.title}`}>
             <div class="relative overflow-hidden rounded-[10px] bg-navy shadow-[0_40px_70px_-35px_rgba(0,0,0,.8)]">
               {m.photo ? (
                 <img src={m.photo} alt="" loading="lazy" width="800" height="800" class="img-sq !rounded-none grayscale-[.3] transition-all duration-[1100ms] ease-out group-hover:scale-[1.07] group-hover:grayscale-0" />

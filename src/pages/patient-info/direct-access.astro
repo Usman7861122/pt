@@ -1,0 +1,66 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import CtaBand from '../../components/sections/CtaBand.astro';
+import { site } from '../../data/site';
+
+const perks = [
+  ['Less waiting', 'No waiting for a doctor visit, then a referral, then another appointment. You call us and we schedule you.'],
+  ['Lower cost', 'Skip the extra co-pays for a doctor visit or specialist before you reach therapy.'],
+  ['More control', 'You decide when to get help. You stay in charge of your own health care.'],
+  ['Better results', 'Studies show patients report higher satisfaction and better outcomes at discharge with direct access.'],
+];
+const tel = `tel:${site.phone.replace(/[^0-9]/g, '')}`;
+---
+<PageLayout
+  title="Direct" accent="access"
+  eyebrow="Patient info"
+  lede="Did you know you can see a physical therapist without a referral? You can go straight to us when you have pain or an injury."
+  description="Direct access to physical therapy at Performance Therapy Institute in Brentwood, Midtown Nashville and Nolensville, TN. See a physical therapist without a doctor's referral."
+  image="/images/coolsprings/coolsprings-people-13.webp" sideImage="/images/coolsprings/coolsprings-people-13.webp" sideAlt="A patient and a therapist talking one-on-one at a table"
+>
+  <section class="section bg-cream">
+    <div class="container-x grid gap-12 lg:grid-cols-[1fr_20rem] lg:gap-16">
+      <article class="article max-w-3xl" data-reveal>
+        <h2 style="margin-top:0">See a physical therapist without a referral</h2>
+        <p>It may surprise you to learn that you can go directly to your physical therapist when you are dealing with pain or an injury. It does not matter if the problem is old or new. You can schedule a visit with one of our therapists to get help sooner, not later.</p>
+        <p>In the medical community, <strong>direct access</strong> means you can see a physical therapist when you want to, without getting permission first from your doctor. Physical therapists routinely check and treat patients without a doctor’s recommendation.</p>
+        <p>Call any of our clinics in Brentwood, Midtown Nashville or Nolensville, and we will schedule your appointment right away.</p>
+
+        <h2>Why people choose direct access</h2>
+        <p>Direct access cuts out the wasted time. You do not have to wait to see a doctor, then wait for a referral, then wait again for a therapy appointment. It can also save you money, because you avoid the extra co-pays along the way.</p>
+        <p>Most of all, it is about freedom. It lets you make your own decisions about your care so you can focus on your recovery instead of on more appointments.</p>
+
+        <h2>Common misunderstandings</h2>
+        <p>The term “direct access” has been around for decades, but not everyone outside physical therapy knows what it means. The old way of doing things is changing, so patients can reach physical therapy faster.</p>
+        <p>There is a lot of evidence that early or direct access to physical therapy shortens waiting time, lowers costs, is more convenient for patients and the health care system and, most important, improves recovery time. It is much more common than many people, and even other medical providers, realize.</p>
+        <p>For a long time, only a few states let patients go straight to a physical therapist. Today, direct access is available in all 50 states and the District of Columbia. Some limits still apply, but the change has helped make sure you get the care you need when you need it.</p>
+
+        <h2>Direct access and health insurance</h2>
+        <p>Health insurance can be confusing. Every carrier and every plan is different. The good news is that many private health insurance carriers cover direct access. Always check what your own plan covers, no matter what.</p>
+        <p>Your physical therapist stays in contact with your doctor. We send your plan of care to a registered doctor to review and sign. When your therapist creates a treatment plan, Medicare will cover the cost of the service.</p>
+        <p>If you or someone you love would like to learn more about direct access, or how physical therapy can help with any condition, request an appointment with us today.</p>
+      </article>
+
+      <aside class="space-y-6 lg:sticky lg:top-28 lg:self-start" data-reveal style="--d:120ms">
+        <div class="rounded-[10px] border border-navy/15 bg-white p-7">
+          <p class="eyebrow">Why it helps</p>
+          <ul class="mt-5 space-y-5" role="list">
+            {perks.map(([t, d]) => (
+              <li><p class="font-display text-xl text-navy">{t}</p><p class="mt-1 text-[15px] leading-relaxed text-muted">{d}</p></li>
+            ))}
+          </ul>
+        </div>
+        <div class="rounded-[10px] bg-navy-deep p-7 text-white">
+          <p class="eyebrow eyebrow-light">Ready to start?</p>
+          <p class="font-display mt-4 text-2xl leading-snug">Call us and we will schedule you today.</p>
+          <div class="mt-6 flex flex-col gap-3">
+            <a href={site.bookingUrl} class="btn btn-red">Request an Appointment</a>
+            <a href={tel} class="btn btn-ghost-light">Call {site.phone}</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <CtaBand eyebrow="Your next steps" title="Get care without" accent="the wait." text="Request an appointment, get a custom plan, work hard and recover pain-free." />
+</PageLayout>

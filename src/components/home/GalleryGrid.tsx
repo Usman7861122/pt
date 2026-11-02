@@ -6,7 +6,7 @@ const Icon = ({ d }: { d: string }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={d} /></svg>
 );
 
-export default function GalleryGrid({ images }: { images: Img[] }) {
+export default function GalleryGrid({ images, title = 'Step', accent = 'inside', after = 'our clinics.' }: { images: Img[]; title?: string; accent?: string; after?: string }) {
   const [open, setOpen] = useState<number | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const n = images.length;
@@ -29,7 +29,7 @@ export default function GalleryGrid({ images }: { images: Img[] }) {
       <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
         <div>
           <p className="eyebrow">Gallery</p>
-          <h2 className="mt-4 text-4xl font-medium leading-[1.06] text-navy md:text-6xl">Step <em className="text-red">inside</em> our clinics.</h2>
+          <h2 className="mt-4 text-4xl font-medium leading-[1.06] text-navy md:text-6xl">{title} <em className="text-red">{accent}</em> {after}</h2>
         </div>
         <button type="button" onClick={() => setOpen(0)} className="link-arrow text-navy">
           View all {n} photos

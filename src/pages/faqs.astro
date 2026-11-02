@@ -1,0 +1,67 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import CtaBand from '../components/sections/CtaBand.astro';
+import { site } from '../data/site';
+
+// Questions and answers are from the old site (performnashville.com/faqs), shortened and put in plain English.
+const faqs: { q: string; a: string; list?: string[] }[] = [
+  { q: 'What is physical therapy?', a: 'Physical therapy is a hands-on medical approach to ease pain and restore movement. Physical therapists are experts in muscle, bone and nerve conditions, and they work closely with doctors. Your therapist checks how you move, finds the cause of your pain and works to remove it, using gentle hands-on techniques, exercises and equipment. The goal is pain-free movement, and keeping the pain from coming back.' },
+  { q: 'What is occupational therapy?', a: 'Occupational therapy (OT) helps people be more independent in daily life while preventing or lowering disability. It is often combined with physical therapy. OT can help with thinking, vision, hand and arm use, and getting back to activities you enjoy.' },
+  { q: 'What is lymphedema therapy?', a: 'Lymphedema is swelling caused by a problem with lymph fluid flow. The fluid builds up under the skin, most often after lymph nodes are removed or when something blocks the flow. Certified lymphedema therapists (CLTs) treat the swelling with manual lymphatic drainage, compression bandages or garments, gentle exercise, and education for you and your family.' },
+  { q: 'What is speech therapy?', a: 'Speech therapy is done by speech-language pathologists. It checks and treats communication and speech problems. It also helps people who have trouble eating, drinking or swallowing, and people who have problems with memory, processing and problem-solving.' },
+  { q: 'How do I know if therapy will help me?', a: 'Together with you and your doctor, we talk through your options and decide if therapy is the right choice. Contact us to talk about your condition. You can even set up a free consultation.' },
+  { q: 'Can I go to any therapy clinic I choose?', a: 'Yes. You have the right to get physical, occupational or speech therapy at any place you choose. We work hard to give you high-quality care in a positive, encouraging place, with well-trained and friendly staff.' },
+  { q: 'How do I schedule an appointment?', a: `Call us at ${site.phone} or use the contact form on our website. We will find a time and clinic that work for you. You do not need a referral to start.` },
+  { q: 'What should I bring to my first appointment?', a: 'Please have your prescription (if you have one) and insurance card ready when you call, so we can check your benefits and estimate your coverage. For your first visit, bring:', list: ['A prescription for physical therapy from your doctor, ARNP or PA, if needed', 'Your insurance card (we will copy it)', 'Your patient forms, printed and filled out', 'For a car accident or workers’ compensation claim: the case manager or adjuster’s name, phone number and your claim number', 'Please arrive 15 minutes early to finish any paperwork, so you can use your full evaluation', 'Wear comfortable clothes that let us reach your sore areas'] },
+  { q: 'Will it hurt?', a: 'Physical therapy is meant to relieve pain, not cause it. As you get your motion back, pain can go up and down for a while. You may feel some soreness from using weak or healing muscles. That is a normal response. Good talk with your therapist helps keep you comfortable.' },
+  { q: 'Does insurance cover my treatment?', a: 'In most cases, yes. We will contact your insurance company and find out what your plan covers. See our insurance page for more, and please call us with any questions. We also offer payment options.' },
+  { q: 'What if I don’t have insurance?', a: 'If you do not have insurance, we offer a discounted fee that is due at the time of service.' },
+  { q: 'What types of payment do you accept?', a: 'We accept cash, check, debit card and credit card, and we are happy to talk about payment plans. Payment is due at the time of service. We learn your insurance benefits before your second visit and tell you then if any payment is needed.' },
+  { q: 'What should I wear?', a: 'Wear comfortable clothes that let your therapist reach the sore area. For treatment, loose clothes that are easy to exercise in and supportive sneakers are often a good choice.' },
+  { q: 'How long will my therapy sessions last?', a: 'Each session usually lasts 60 to 75 minutes. The time depends on your needs, and your therapist will talk with you about it.' },
+  { q: 'How many sessions will I have?', a: 'Every diagnosis is different. With your doctor, your therapist builds a plan of care that is right for you. Your plan and the number of visits are set at your first visit and explained by your physical therapist.' },
+  { q: 'What education and training do your therapists have?', a: 'Physical therapists have years of university-level training in anatomy, physiology, kinesiology (how joints move), neurology and other medical sciences. Our therapists graduated from accredited programs and are state licensed. Depending on the school, the degree is a master’s or a doctorate.' },
+  { q: 'Do you offer programs for me once I’m better?', a: 'Yes. When you finish therapy, your therapist reviews your home program. We can arrange to meet you at your gym to pick helpful equipment and exercises. We also offer wellness programs.' },
+];
+
+const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a + (f.list ? ' ' + f.list.join('; ') + '.' : '') } })) };
+---
+<PageLayout
+  title="Frequently asked" accent="questions"
+  eyebrow="FAQs"
+  lede="Quick answers about therapy, your first visit, insurance and payment. Can’t find yours? Call us."
+  description="Frequently asked questions about physical therapy at Performance Therapy Institute in Brentwood, Midtown Nashville and Nolensville, TN: first visit, insurance, payment and more."
+  image="/images/coolsprings/coolsprings-people-14.webp" sideImage="/images/coolsprings/coolsprings-people-14.webp" sideAlt="A therapist helping a patient with movement"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <section class="section bg-cream">
+    <div class="container-x grid items-start gap-10 lg:grid-cols-[.8fr_1.2fr] lg:gap-16">
+      <div class="lg:sticky lg:top-28" data-reveal>
+        <p class="eyebrow">Good to know</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Answers <em class="text-red">before you ask.</em></h2>
+        <p class="mt-5 max-w-md text-lg leading-relaxed text-muted">Still have a question? Our front desk team is glad to help.</p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href={`tel:${site.phone.replace(/[^0-9]/g, '')}`} class="btn btn-red">Call {site.phone}</a>
+          <a href={site.bookingUrl} class="btn btn-ghost-dark">Send a message</a>
+        </div>
+      </div>
+
+      <div class="divide-y divide-navy/15 border-y border-navy/15" data-reveal style="--d:100ms">
+        {faqs.map((f, k) => (
+          <details class="group py-1" open={k === 0}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-left font-display text-[1.25rem] leading-snug text-navy marker:hidden [&::-webkit-details-marker]:hidden">
+              {f.q}
+              <span aria-hidden="true" class="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-navy/25 text-xl leading-none text-navy transition-all duration-300 group-open:rotate-45 group-open:border-red group-open:text-red">+</span>
+            </summary>
+            <div class="pb-6 pr-12 text-[17px] leading-relaxed text-navy/75">
+              <p>{f.a}</p>
+              {f.list && <ul class="mt-3 list-disc space-y-1.5 pl-5 marker:text-red">{f.list.map((i) => <li>{i}</li>)}</ul>}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand eyebrow="Ready to start?" title="Take the first step toward" accent="feeling better." text="Request an appointment and we will find a time that works for you." />
+</PageLayout>

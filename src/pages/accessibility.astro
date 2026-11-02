@@ -1,0 +1,18 @@
+---
+import LegalDoc from '../components/sections/LegalDoc.astro';
+// DRAFT. TODO: confirm the response time and run a full accessibility audit before launch.
+const sections = [
+  { id: 'commitment', title: 'Our commitment', html: `<p>Performance Therapy Institute wants everyone to be able to use our website, including people with disabilities. We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.1, Level AA.</p>` },
+  { id: 'measures', title: 'What we do', html: `<ul><li>Pages can be used with a keyboard alone, and the focus outline is easy to see.</li><li>There is a “Skip to content” link at the top of every page.</li><li>Images that carry meaning have text descriptions.</li><li>Text and buttons use colors with strong contrast.</li><li>The layout works on phones, tablets and computers, and when you zoom in.</li><li>Moving effects are turned off if your device is set to “reduce motion”.</li><li>Forms have clear labels and error messages.</li><li>Our cookie settings panel works with a keyboard and a screen reader.</li></ul>` },
+  { id: 'limits', title: 'Known limits', html: `<p>We are always improving, and some things are still hard to use:</p><ul><li>Some content comes from other companies, such as the patient portal, the online referral form and embedded Google Maps. We do not control their accessibility.</li><li>Downloadable forms, such as the new patient forms PDF, may not work well with every screen reader. Call us and we will help you fill them out.</li></ul>` },
+  { id: 'help', title: 'Need help or have feedback?', html: `<p>If you have trouble using any part of the site, or you need information in another format, such as large print, please tell us. Call <a href="tel:6154656810">615-465-6810</a> or use the <a href="/#contact">contact form</a>. Tell us the page, what went wrong and how you use the web. We aim to reply within two business days.</p>` },
+  { id: 'clinics', title: 'At our clinics', html: `<p>If you need an accommodation for your visit, such as help with entering the building or a different way to complete forms, tell us when you book and we will make a plan with you.</p>` },
+];
+---
+<LegalDoc
+  title="Accessibility" accent="statement"
+  description="Accessibility statement for the Performance Therapy Institute website."
+  updated="November 2, 2026"
+  lede="Our website should work for everyone. Here is what we do and how to reach us if something does not."
+  sections={sections}
+/>

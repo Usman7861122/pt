@@ -1,0 +1,104 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { site } from '../data/site';
+import { locations } from '../data/home';
+
+// Conditions, offices and in-home care come from Dr. Colbert's email (Jun 30). Other copy is draft. TODO: replace with the "womens health marketing" document.
+const conditions = [
+  { t: 'Pregnancy-related concerns', d: 'Support for back, hip and pelvic aches, with safe exercise for each stage.' },
+  { t: 'Postpartum recovery', d: 'Rebuild core strength and ease back into daily life at your own pace.' },
+  { t: 'Urinary incontinence', d: 'Private, caring treatment to help you regain bladder control.' },
+  { t: 'Pelvic pain', d: 'Find the cause of pelvic pain and learn how to calm it.' },
+  { t: 'Pain with intercourse', d: 'Gentle, respectful care for pain that affects intimacy.' },
+  { t: 'Sacroiliac joint dysfunction', d: 'Ease pain where the spine meets the pelvis.' },
+  { t: 'Pubic symphysis pain', d: 'Relief for pain at the front of the pelvis, often during or after pregnancy.' },
+  { t: 'Low back pain', d: 'Hands-on care and exercise to move your back with less pain.' },
+  { t: 'Diastasis recti', d: 'Safe core work to help close the gap in your abdominal muscles.' },
+  { t: 'C-section scar dysfunction', d: 'Scar care that eases pulling, tightness and pain after surgery.' },
+];
+const offices = locations.filter((l) => l.id === 'brentwood');
+---
+<PageLayout
+  title="Women's"
+  accent="Health"
+  eyebrow="New program"
+  lede="Pelvic health and women's care, with one-on-one time with your therapist."
+  description="Women's health physical and occupational therapy at Performance Therapy Institute: pregnancy and postpartum care, pelvic pain, incontinence and more, in Brentwood and Nolensville, plus in-home visits."
+  image="/images/coolsprings/coolsprings-people-16.webp"
+>
+  <!-- Intro + specialist -->
+  <section class="section bg-blush">
+    <div class="container-x grid items-center gap-14 lg:grid-cols-[1.1fr_.9fr] lg:gap-20">
+      <div data-reveal>
+        <p class="eyebrow">Care for every stage</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Helping women move better, feel better, and <em class="text-red">live better.</em></h2>
+        <div class="mt-6 space-y-5 text-lg leading-relaxed text-navy/75">
+          <p>We are adding women's health to our services, and we want you to know it is here. Our pelvic health program gives you private, caring treatment built around your body and your goals.</p>
+          <p>Dr. Hayley Fuller, OTD, OTR/L, leads the program. She treats women across the lifespan and teaches you what is going on, so you can feel in control of your recovery.</p>
+        </div>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a href={site.bookingUrl} class="btn btn-red">Request an Appointment</a>
+          <a href="/team/hayley-fuller" class="btn btn-ghost-dark">Meet Dr. Fuller</a>
+        </div>
+      </div>
+      <div class="relative mx-auto w-full max-w-md pb-6 pr-6" data-reveal style="--d:120ms">
+        <div aria-hidden="true" class="absolute bottom-0 right-0 top-6 w-[calc(100%-1.5rem)] rounded-[10px] border border-gold/70"></div>
+        <img src="/images/womens-health/dr-hayley-fuller.webp" alt="Dr. Hayley Fuller, occupational therapist for pelvic health" width="900" height="1125" loading="lazy" class="relative block aspect-[4/5] w-full rounded-[10px] object-cover shadow-[0_50px_90px_-40px_rgba(20,33,61,.6)]" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Conditions -->
+  <section class="section bg-white">
+    <div class="container-x">
+      <div class="mx-auto max-w-3xl text-center" data-reveal>
+        <p class="eyebrow">What we treat</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-6xl">Conditions we can <em class="text-red">help with.</em></h2>
+      </div>
+      <ul class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list">
+        {conditions.map((c, k) => (
+          <li data-reveal style={`--d:${(k % 3) * 80}ms`} class="group relative overflow-hidden rounded-[10px] border border-navy/15 bg-blush/50 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-red hover:bg-white hover:shadow-[0_30px_50px_-30px_rgba(20,33,61,.45)]">
+            <span aria-hidden="true" class="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-gold to-red transition-transform duration-700 group-hover:scale-x-100"></span>
+            <h3 class="font-display text-2xl text-navy">{c.t}</h3>
+            <p class="mt-3 text-[15px] leading-relaxed text-navy/70">{c.d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Where -->
+  <section data-spot class="section grain relative isolate overflow-hidden bg-navy-deep text-white" style="--glow: rgba(255,126,134,.12)">
+    <div class="spot-dots text-white/40" aria-hidden="true"></div>
+    <div class="spot-glow" aria-hidden="true"></div>
+    <div class="container-x relative z-10">
+      <div class="mx-auto max-w-3xl text-center" data-reveal>
+        <p class="eyebrow eyebrow-light">Where to find us</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] md:text-6xl">Two offices, <em class="text-[#FF7E86]">and your home.</em></h2>
+      </div>
+      <ul class="mx-auto mt-14 grid max-w-5xl gap-4 md:grid-cols-3" role="list">
+        {offices.map((o) => (
+          <li data-reveal class="rounded-[10px] border border-white/15 bg-white/[.04] p-7">
+            <p class="eyebrow eyebrow-light">Office</p>
+            <h3 class="font-display mt-4 text-2xl">{o.name}</h3>
+            <p class="mt-3 text-white/70">1646 Westgate Circle, Suite 106<br />Brentwood, TN 37027</p>
+          </li>
+        ))}
+        <li data-reveal style="--d:80ms" class="rounded-[10px] border border-white/15 bg-white/[.04] p-7">
+          <p class="eyebrow eyebrow-light">Office</p>
+          <h3 class="font-display mt-4 text-2xl">Nolensville</h3>
+          <p class="mt-3 text-white/70">7227 Haley Industrial Drive, Suite 1200<br />Nolensville, TN 37135</p>
+        </li>
+        <li data-reveal style="--d:160ms" class="rounded-[10px] border border-[#FF7E86]/50 bg-[#FF7E86]/10 p-7">
+          <p class="eyebrow eyebrow-light">At home</p>
+          <h3 class="font-display mt-4 text-2xl">In-home treatment</h3>
+          <p class="mt-3 text-white/70">Also available. Ask us how to set up a visit.</p>
+        </li>
+      </ul>
+      <div class="mt-12 text-center" data-reveal>
+        <a href={site.bookingUrl} class="btn btn-red">Request an Appointment</a>
+      </div>
+    </div>
+  </section>
+
+</PageLayout>

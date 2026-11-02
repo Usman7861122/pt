@@ -1,0 +1,18 @@
+---
+import LegalDoc from '../components/sections/LegalDoc.astro';
+// DRAFT. TODO: update the tables when analytics or ad tools are added to the site.
+const sections = [
+  { id: 'what', title: 'What cookies are', html: `<p>Cookies are small text files that a website saves on your device. They help a site work, remember your choices and, if you allow it, understand how people use it. Similar tools, such as local storage, work the same way, and we count them as cookies here.</p>` },
+  { id: 'choices', title: 'Your choices', html: `<p>When you first visit, we ask which cookies you allow. You can change your mind at any time:</p><p><button type="button" data-cookie-settings>Open cookie settings</button></p><p>You can also delete or block cookies in your browser. If you block all cookies, some parts of the site may not work as well. Your cookie choice is kept for 12 months, then we ask again.</p>` },
+  { id: 'types', title: 'The cookies we use', html: `<p><strong>Strictly necessary (always on).</strong> These keep the site working and remember your cookie choice.</p><table><thead><tr><th>Name</th><th>What it does</th><th>How long</th></tr></thead><tbody><tr><td><code>pti_consent</code> and <code>pti-consent</code></td><td>Remember your cookie choices</td><td>12 months</td></tr></tbody></table><p><strong>Preferences (off until you allow).</strong> Remember settings so you do not have to choose again. We do not use any at this time.</p><p><strong>Analytics (off until you allow).</strong> Help us see which pages are used and how, so we can improve the site. We do not use any at this time. If we add an analytics tool, it will only load after you allow it.</p><p><strong>Marketing (off until you allow).</strong> Help us measure our ads and show relevant information about our care on other sites. We do not use any at this time. If we add one, it will only load after you allow it.</p>` },
+  { id: 'third', title: 'Content from other companies', html: `<p>Some pages load content from other companies. They may collect your IP address and set their own cookies when the content loads:</p><ul><li><strong>Google Fonts</strong> loads the typefaces used on the site.</li><li><strong>Google Maps</strong> shows the map on clinic pages.</li><li><strong>Our patient portal and referral form</strong> open on other websites with their own policies.</li></ul>` },
+  { id: 'more', title: 'More information', html: `<p>To learn how we handle personal information, read our <a href="/privacy">Privacy Policy</a>. Questions? Call <a href="tel:6154656810">615-465-6810</a>.</p>` },
+];
+---
+<LegalDoc
+  title="Cookie" accent="policy"
+  description="How Performance Therapy Institute uses cookies and how you can control them."
+  updated="November 2, 2026"
+  lede="What cookies we use, why, and how to change your choices at any time."
+  sections={sections}
+/>

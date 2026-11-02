@@ -1,0 +1,15 @@
+---
+import ConditionsFlip from '../home/ConditionsFlip.tsx';
+import { featuredServices } from '../../data/home';
+---
+<section id="services" class="section bg-white">
+  <div class="container-x">
+    <div class="mx-auto max-w-3xl text-center" data-reveal>
+      <p class="eyebrow">Therapy services</p>
+      <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-6xl">Care built <em class="text-red">around you.</em></h2>
+      <p class="mx-auto mt-5 max-w-xl text-lg text-muted">Hands-on care and proven tools, matched to your goals. Hover over or tap a card to learn more.</p>
+    </div>
+    <div class="mt-12" data-reveal><ConditionsFlip client:visible items={featuredServices} base="services" /></div>
+    <div class="mt-12 text-center"><a href="/services" class="btn btn-navy">See All Therapy Services</a></div>
+  </div>
+</section>

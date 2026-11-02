@@ -28,14 +28,14 @@ const tel = (p: string) => 'tel:' + p.replace(/[^0-9]/g, '');
     </div>
 
     <nav aria-label="Footer">
-      <h2 class="eyebrow !text-[#ff7d85]">Explore</h2>
+      <h2 class="eyebrow !text-[#FF7E86]">Explore</h2>
       <ul class="mt-4 grid gap-1">
         {site.footerNav.map((n) => <li><a href={n.href} class="inline-block py-1.5 text-white/85 hover:text-white hover:underline underline-offset-4">{n.label}</a></li>)}
       </ul>
     </nav>
 
     <div>
-      <h2 class="eyebrow !text-[#ff7d85]">Locations</h2>
+      <h2 class="eyebrow !text-[#FF7E86]">Locations</h2>
       <ul class="mt-4 grid gap-6 sm:grid-cols-2">
         {locations.map((l) => (
           <li>
@@ -51,7 +51,14 @@ const tel = (p: string) => 'tel:' + p.replace(/[^0-9]/g, '');
   <div class="border-t border-white/10">
     <div class="mx-auto max-w-[82rem] flex flex-col gap-2 px-4 py-6 text-sm text-white/60 md:flex-row md:justify-between">
       <p>&copy; {new Date().getFullYear()} {site.name}. All rights reserved.</p>
-      <p><a href="/privacy" class="hover:text-white">Privacy</a> · <a href="/terms-conditions" class="hover:text-white">Terms &amp; Conditions</a> · <a href="/accessibility" class="hover:text-white">Accessibility</a></p>
+      <p class="flex flex-wrap gap-x-3 gap-y-1">
+        <a href="/privacy" class="hover:text-white">Privacy</a>
+        <a href="/terms-conditions" class="hover:text-white">Terms &amp; Conditions</a>
+        <a href="/accessibility" class="hover:text-white">Accessibility</a>
+        <a href="/cookie-policy" class="hover:text-white">Cookie Policy</a>
+        <a href="/notice-of-privacy-practices" class="hover:text-white">Notice of Privacy Practices</a>
+        <button type="button" data-cookie-settings class="hover:text-white">Cookie settings</button>
+      </p>
     </div>
   </div>
 </footer>

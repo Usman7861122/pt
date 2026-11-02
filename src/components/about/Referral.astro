@@ -1,0 +1,28 @@
+---
+const who = ['General practitioners', 'Orthopedists', 'Neurologists'];
+---
+<section class="section bg-cream">
+  <div class="container-x">
+    <div class="relative overflow-hidden rounded-[10px] border border-navy/15 bg-white p-8 md:p-14" data-reveal>
+      <div class="grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
+        <div>
+          <p class="eyebrow">Trusted by doctors</p>
+          <h2 class="mt-5 text-3xl font-medium leading-[1.1] text-navy md:text-5xl">Referred by physicians <em class="text-red">across Middle Tennessee.</em></h2>
+          <p class="mt-5 max-w-xl text-lg text-navy/70">Doctors send us their patients because they know the care is personal and the results last. If you are a provider, you can send a referral online.</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="https://performancetherapyinstitute.preferral.com/referral_wizard/1" target="_blank" rel="noopener" class="btn btn-navy">Refer a Patient</a>
+            <a href="/patient-info/direct-access" class="btn btn-ghost-dark">Direct Access Info</a>
+          </div>
+        </div>
+        <ul class="grid gap-3" role="list">
+          {who.map((w) => (
+            <li class="flex items-center gap-4 rounded-lg border border-navy/15 bg-cream/60 px-5 py-4">
+              <span class="grid h-9 w-9 place-items-center rounded-full bg-red/10 text-red"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg></span>
+              <span class="font-display text-xl text-navy">{w}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

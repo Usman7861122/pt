@@ -1,0 +1,179 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { conditionPages } from '../../data/conditionPages';
+import { profiles } from '../../data/team';
+import { locations } from '../../data/home';
+import { areas } from '../../data/areas';
+import { site } from '../../data/site';
+
+// Shared full template for condition and service pages (hero, overview, how therapy helps, FAQ, doctors, locations, next steps).
+const { page, area = null } = Astro.props as any;
+const base = page.base ?? 'conditions';
+const eyebrow = base === 'services' ? 'Therapy services' : 'What we treat';
+const docs = page.doctors.map((d: any) => ({ ...profiles.find((p) => p.slug === d.slug)!, note: d.note }));
+const locs = locations.filter((l) => page.locations.includes(l.id)).sort((a, b) => (a.id === area?.id ? -1 : b.id === area?.id ? 1 : 0));
+const cityHref = (l: any) => (areas[l.id] ? `/${base}/${page.slug}/${l.id}` : null);
+const tel = (n: string) => `tel:${n.replace(/[^0-9]/g, '')}`;
+const dir = (l: any) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`Performance Therapy Institute ${l.address} ${l.city}`)}`;
+const head = page.therapyHead ?? { title: 'One team,', accent: 'working together.', text: 'Your therapists work as a team, based on your symptoms and how far the disease has progressed.' };
+const heroTitle = area ? (page.cityTitle ?? `${page.title} treatment in`) : page.title;
+const heroAccent = area ? area.city : undefined;
+const heroLede = area ? page.areaLede.replaceAll('{city}', area.city) : page.lede;
+const nearby = area ? `Patients are welcome from across ${area.city}, ${area.nearby.join(', ')} and ${area.area}.` : undefined;
+const heroDesc = area ? `${page.title} treatment in ${area.city}, ${area.state}. Physical therapy at our ${area.city} clinic.` : page.description;
+---
+<PageLayout title={heroTitle} accent={heroAccent} eyebrow={area ? `${eyebrow} · ${area.city}, ${area.state}` : eyebrow} lede={heroLede} {nearby} description={heroDesc} image={page.images[2].src} sideImage={page.images[0].src} sideAlt={page.images[0].alt}>
+  <!-- Overview -->
+  <section class="section bg-cream">
+    <div class="container-x grid items-start gap-14 lg:grid-cols-[1.1fr_.9fr] lg:gap-20">
+      <div data-reveal>
+        <p class="eyebrow">About {page.title}</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Understanding <em class="text-red">{page.title}.</em></h2>
+        <div class="mt-6 space-y-5 text-lg leading-relaxed text-navy/75">{page.overview.map((t: string) => <p>{t}</p>)}</div>
+        <div class="mt-8 rounded-[10px] border border-navy/15 bg-white/60 p-6">
+          <p class="text-xs uppercase tracking-[.22em] text-red">{page.signs.title}</p>
+          <ul class="mt-4 grid gap-3 sm:grid-cols-2" role="list">
+            {page.signs.items.map((s: string) => (
+              <li class="flex gap-3 text-[15px] text-navy/80"><span aria-hidden="true" class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red"></span>{s}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div class="relative mx-auto w-full max-w-lg pb-8 pr-8 lg:sticky lg:top-28" data-reveal style="--d:120ms">
+        <div aria-hidden="true" class="absolute bottom-0 right-0 top-8 w-[calc(100%-2rem)] rounded-[10px] border border-gold/70"></div>
+        <img src={page.images[1].src} alt={page.images[1].alt} width="900" height="1000" loading="lazy" class="relative block aspect-[4/5] w-full rounded-[10px] object-cover shadow-[0_50px_90px_-40px_rgba(20,33,61,.6)]" />
+      </div>
+    </div>
+  </section>
+
+  <!-- How therapy helps -->
+  <section data-spot class="section grain relative isolate overflow-hidden bg-navy-deep text-white" style="--glow: rgba(255,126,134,.12)">
+    <img src={page.images[2].src} alt="" loading="lazy" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-15" />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-navy-deep via-navy-deep/90 to-navy-deep"></div>
+    <div class="spot-dots text-white/40" aria-hidden="true"></div>
+    <div class="spot-glow" aria-hidden="true"></div>
+    <div class="container-x relative z-10">
+      <div class="mx-auto max-w-3xl text-center" data-reveal>
+        <p class="eyebrow eyebrow-light">How therapy helps</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] md:text-6xl">{head.title} <em class="text-[#FF7E86]">{head.accent}</em></h2>
+        <p class="mx-auto mt-5 max-w-2xl text-lg text-white/70">{head.text}</p>
+      </div>
+      <ul class="mt-14 grid gap-4 lg:grid-cols-3" role="list">
+        {page.therapies.map((t: any, k: number) => (
+          <li data-reveal style={`--d:${k * 90}ms`} class="group rounded-[10px] border border-white/15 bg-white/[.04] p-8 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-[#FF7E86]/70 hover:bg-white/[.08]">
+            <h3 class="font-display text-3xl">{t.title}</h3>
+            <p class="mt-2 text-[#FF7E86]">{t.text}</p>
+            <ul class="mt-6 space-y-3 border-t border-white/15 pt-6" role="list">
+              {t.points.map((p: string) => <li class="flex gap-3 text-[15px] text-white/75"><span aria-hidden="true" class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#FF7E86]"></span>{p}</li>)}
+            </ul>
+          </li>
+        ))}
+      </ul>
+      <p class="font-display mx-auto mt-12 max-w-3xl text-center text-2xl italic leading-snug text-white/90 md:text-3xl" data-reveal>{page.goal}</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  {page.faqs && (
+  <section class="section bg-cream">
+    <div class="container-x grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
+      <div data-reveal class="lg:sticky lg:top-28 lg:self-start">
+        <p class="eyebrow">Good to know</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Questions about <em class="text-red">{page.title.toLowerCase()}.</em></h2>
+        <a href={site.bookingUrl} class="btn btn-red mt-8">Request an Appointment</a>
+      </div>
+      <div data-reveal style="--d:100ms" class="border-t border-navy/15">
+        {page.faqs.map((f: any, k: number) => (
+          <details class="group border-b border-navy/15 py-6" open={k === 0}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-2xl text-navy">
+              {f.q}
+              <span aria-hidden="true" class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-navy/25 text-xl leading-none transition-transform duration-300 group-open:rotate-45 group-open:border-red group-open:text-red">+</span>
+            </summary>
+            <div class="mt-4 max-w-2xl space-y-4 text-lg leading-relaxed text-navy/75">
+              {f.a.map((t: string) => <p>{t}</p>)}
+              {f.list && <ul class="grid gap-2 sm:grid-cols-2" role="list">{f.list.map((i: string) => <li class="flex gap-3 text-[16px]"><span aria-hidden="true" class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red"></span>{i}</li>)}</ul>}
+              {f.after && <p>{f.after}</p>}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+  )}
+
+  <!-- Doctors -->
+  <section class="section bg-white">
+    <div class="container-x">
+      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+        <div>
+          <p class="eyebrow">Your care team</p>
+          <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Therapists who treat <em class="text-red">{page.title}.</em></h2>
+        </div>
+        <a href="/team" class="btn btn-ghost-dark">Meet the full team</a>
+      </div>
+      <ul class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3" role="list">
+        {docs.map((d: any, k: number) => (
+          <li data-reveal style={`--d:${k * 90}ms`}>
+            <a href={`/team/${d.slug}`} class="group block" aria-label={`${d.name}, ${d.role}`}>
+              <div class="relative overflow-hidden rounded-[10px] bg-navy shadow-[0_40px_70px_-40px_rgba(20,33,61,.6)]">
+                <img src={d.photo} alt="" loading="lazy" width="800" height="800" class="img-sq !rounded-none transition-transform duration-[1100ms] group-hover:scale-[1.06]" />
+                <span aria-hidden="true" class="absolute inset-3 rounded-[6px] border border-white/0 transition-all duration-700 group-hover:inset-4 group-hover:border-white/60"></span>
+              </div>
+              <h3 class="font-display mt-5 text-2xl text-navy">{d.name}</h3>
+              <p class="mt-1 text-xs uppercase tracking-[.2em] text-gold">{d.title}</p>
+              <p class="mt-2 text-[15px] text-muted">{d.note}</p>
+              <span class="btn btn-ghost-dark mt-4">View profile</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Locations -->
+  <section class="section bg-cream">
+    <div class="container-x">
+      <div class="mx-auto max-w-3xl text-center" data-reveal>
+        <p class="eyebrow">Where we treat {page.title}</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Find a clinic <em class="text-red">near you.</em></h2>
+      </div>
+      <ul class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3" role="list">
+        {locs.map((l: any, k: number) => (
+          <li data-reveal style={`--d:${k * 90}ms`} class="group overflow-hidden rounded-[10px] border border-navy/15 bg-white transition-all duration-500 hover:-translate-y-1 hover:border-red hover:shadow-[0_30px_50px_-30px_rgba(20,33,61,.45)]">
+            {l.image && (cityHref(l) ? <a href={cityHref(l)} tabindex="-1" aria-hidden="true"><img src={l.image} alt={`${l.name} clinic`} loading="lazy" width="900" height="600" class="aspect-[3/2] w-full object-cover" /></a> : <img src={l.image} alt={`${l.name} clinic`} loading="lazy" width="900" height="600" class="aspect-[3/2] w-full object-cover" />)}
+            <div class="p-6">
+              <h3 class="font-display text-2xl text-navy">{cityHref(l) ? <a href={cityHref(l)} class="hover:text-red">{l.name}</a> : l.name}</h3>
+              <p class="mt-2 text-[15px] text-muted">{l.address}<br />{l.city}</p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                {cityHref(l) && l.id !== area?.id && <a href={cityHref(l)} class="btn btn-navy !min-h-[40px] !px-4 !py-2 text-sm">{page.title} in {areas[l.id].city}</a>}
+                <a href={tel(l.phone)} class="btn btn-red !min-h-[40px] !px-4 !py-2 text-sm">Call {l.phone}</a>
+                <a href={dir(l)} target="_blank" rel="noopener" class="btn btn-ghost-dark !min-h-[40px] !px-4 !py-2 text-sm">Directions</a>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Next steps -->
+  <section class="section bg-white">
+    <div class="container-x">
+      <div class="mx-auto max-w-3xl text-center" data-reveal>
+        <p class="eyebrow">Your next steps</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Getting started is <em class="text-red">simple.</em></h2>
+      </div>
+      <ol class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4" role="list">
+        {page.steps.map((s: any, k: number) => (
+          <li data-reveal style={`--d:${k * 90}ms`} class="relative border-t border-navy/20 pt-6">
+            <span aria-hidden="true" class="absolute -top-px left-0 h-px w-12 bg-red"></span>
+            <p class="font-display text-5xl text-gold/80">{String(k + 1).padStart(2, '0')}</p>
+            <h3 class="font-display mt-4 text-2xl text-navy">{s.t}</h3>
+            <p class="mt-3 text-[15px] leading-relaxed text-navy/70">{s.d}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="mt-12 text-center" data-reveal><a href={site.bookingUrl} class="btn btn-red">Request an Appointment</a></div>
+    </div>
+  </section>
+</PageLayout>

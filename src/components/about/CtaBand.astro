@@ -1,0 +1,18 @@
+---
+import { site } from '../../data/site';
+---
+<section data-spot class="grain relative isolate overflow-hidden bg-navy-deep py-24 text-white" style="--glow: rgba(183,157,110,.16)">
+  <img src="/images/brentwood/brentwood-02.webp" alt="" loading="lazy" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-20" />
+  <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-b from-navy-deep via-navy-deep/85 to-navy-deep"></div>
+  <div class="spot-dots text-white/40" aria-hidden="true"></div>
+  <div class="spot-glow" aria-hidden="true"></div>
+  <div class="container-x relative px-4 text-center" data-reveal>
+    <p class="eyebrow eyebrow-light justify-center">Get started</p>
+    <h2 class="mx-auto mt-5 max-w-3xl text-4xl font-medium leading-[1.06] md:text-6xl">Take the first step toward <em class="text-[#FF7E86]">better health.</em></h2>
+    <p class="mx-auto mt-5 max-w-xl text-lg text-white/75">Whether you are recovering from an injury, managing pain or working on your mobility, we can help you get lasting results.</p>
+    <div class="mt-9 flex flex-wrap justify-center gap-3">
+      <a href={site.bookingUrl} class="btn btn-red">Request an Appointment</a>
+      <a href={`tel:${site.phone.replace(/[^0-9]/g, '')}`} class="btn btn-ghost-light">Call {site.phone}</a>
+    </div>
+  </div>
+</section>

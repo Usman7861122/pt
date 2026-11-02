@@ -1,0 +1,27 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import ServicesGrid from '../../components/sections/ServicesGrid.astro';
+import ConditionTemplate from '../../components/conditions/ConditionTemplate.astro';
+import { conditions } from '../../data/conditions';
+import { conditionPages } from '../../data/conditionPages';
+import { areas } from '../../data/areas';
+
+export function getStaticPaths() {
+  const mine = conditionPages.filter((p) => (p.base ?? 'conditions') === 'conditions');
+  const full = mine.flatMap((p) => [
+    { params: { slug: p.slug }, props: { page: p, condition: null, area: null } },
+    ...p.locations.filter((id) => areas[id]).map((id) => ({ params: { slug: `${p.slug}/${id}` }, props: { page: p, condition: null, area: { ...areas[id], id } } })),
+  ]);
+  const stubs = conditions.filter((c) => !conditionPages.some((p) => p.slug === c.slug)).map((c) => ({ params: { slug: c.slug }, props: { page: null, condition: c, area: null } }));
+  return [...full, ...stubs];
+}
+const { page, condition, area } = Astro.props as any;
+---
+{page ? (
+<ConditionTemplate page={page} area={area} />
+) : (
+<PageLayout title={condition.title} eyebrow="Conditions" lede={condition.content.intro} image={condition.image}>
+  <section class="py-16"><div class="mx-auto max-w-7xl px-4"><h2 class="text-2xl font-semibold">Overview</h2><p class="mt-3">{condition.content.overview}</p></div></section>
+  <ServicesGrid title="Related services" only={condition.content.relatedServices} />
+</PageLayout>
+)}

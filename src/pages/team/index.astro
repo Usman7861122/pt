@@ -1,0 +1,37 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { profiles } from '../../data/team';
+const groups = [
+  { id: 'clinical', eyebrow: 'Clinicians', title: 'The hands behind', em: 'your recovery.', text: 'Physical, occupational and speech therapists who give you one-on-one care.' },
+  { id: 'office', eyebrow: 'Front office', title: 'The people who keep', em: 'things running.', text: 'Our office managers and billing specialist help with scheduling, insurance and your questions.' },
+];
+---
+<PageLayout title="Meet our" accent="team" eyebrow="Our people" lede="Doctors of physical therapy with more than 100 years of experience combined, and a front office that takes care of you from the first call." description="Meet the physical therapists and staff at Performance Therapy Institute in Brentwood, Midtown Nashville and Nolensville." image="/images/brentwood/brentwood-people-16.webp">
+  {groups.map((g, gi) => (
+    <section class={`section ${gi % 2 ? 'bg-white' : 'bg-cream'}`}>
+      <div class="container-x">
+        <div class="mx-auto max-w-3xl text-center" data-reveal>
+          <p class="eyebrow">{g.eyebrow}</p>
+          <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">{g.title} <em class="text-red">{g.em}</em></h2>
+          <p class="mx-auto mt-5 max-w-xl text-lg text-muted">{g.text}</p>
+        </div>
+        <ul class="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3" role="list">
+          {profiles.filter((m) => m.group === g.id).map((m, k) => (
+            <li data-reveal style={`--d:${(k % 3) * 100}ms`}>
+              <a href={`/team/${m.slug}`} class="group block" aria-label={`${m.name}, ${m.role}`}>
+                <div class="relative overflow-hidden rounded-[10px] bg-navy shadow-[0_40px_70px_-40px_rgba(20,33,61,.6)]">
+                  <img src={m.photo} alt="" loading="lazy" width="800" height="800" class="img-sq !rounded-none transition-transform duration-[1100ms] group-hover:scale-[1.06]" />
+                  <span aria-hidden="true" class="absolute inset-3 rounded-[6px] border border-white/0 transition-all duration-700 group-hover:inset-4 group-hover:border-white/60"></span>
+                </div>
+                <h3 class="font-display mt-5 text-[1.75rem] leading-tight text-navy">{m.name}</h3>
+                <p class="mt-1 text-xs uppercase tracking-[.2em] text-gold">{m.title || m.role}</p>
+                {m.title && <p class="mt-1 text-sm text-muted">{m.role}</p>}
+                <span class="btn btn-ghost-dark mt-4">View profile</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+</PageLayout>

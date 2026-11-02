@@ -1,7 +1,26 @@
 ---
-import PageLayout from '../layouts/PageLayout.astro';
+import LegalDoc from '../components/sections/LegalDoc.astro';
+// DRAFT. TODO: have the clinic's lawyer or compliance advisor review before launch.
+const sections = [
+  { id: 'who', title: 'Who we are and what this covers', html: `<p>This policy explains how Performance Therapy Institute (“we”, “us”) handles information on this website. We run clinics in Brentwood, Midtown Nashville and Nolensville, Tennessee.</p><p>It covers information you give us on this website and information collected when you visit it. It does <strong>not</strong> cover your medical records. Those are protected under HIPAA and described in our <a href="/notice-of-privacy-practices">Notice of Privacy Practices</a>.</p>` },
+  { id: 'collect', title: 'What we collect', html: `<p><strong>Information you give us.</strong> When you use our contact or career forms, you may give us your name, phone number, email address, preferred clinic, the reason for your request, and any message you write.</p><p><strong>Information collected automatically.</strong> Like most websites, our servers and tools may record your IP address, browser and device type, the pages you visit and the date and time. Some of this is collected with cookies. See our <a href="/cookie-policy">Cookie Policy</a>. We only use analytics and marketing cookies if you allow them.</p>` },
+  { id: 'health', title: 'Please do not send sensitive health details through the website', html: `<p>Our website forms are meant for simple requests, such as asking for an appointment. Please <strong>do not</strong> put detailed medical information, Social Security numbers or payment card numbers in a form, email or text message. Call us and we will take that information safely at your visit.</p>` },
+  { id: 'use', title: 'How we use information', html: `<ul><li>To reply to your questions and requests, and to schedule appointments.</li><li>To run, protect and improve our website.</li><li>To understand how the website is used, if you allow analytics cookies.</li><li>To measure and improve our advertising, if you allow marketing cookies.</li><li>To review job applications sent through our careers form.</li><li>To follow the law and protect our rights.</li></ul>` },
+  { id: 'share', title: 'How we share information', html: `<p>We do not sell your personal information. We share it only with:</p><ul><li><strong>Service providers</strong> that help us run the website, store form messages, schedule care, send email or process payments. They may only use it to do work for us.</li><li><strong>Advertising and analytics partners</strong>, if you allow those cookies.</li><li><strong>Authorities or others</strong> when the law requires it, or to protect safety and rights.</li><li>A successor, if our business is sold or merged.</li></ul>` },
+  { id: 'cookies', title: 'Cookies and your choices', html: `<p>You can accept, reject or customize non-essential cookies at any time using <button type="button" data-cookie-settings>Cookie settings</button>. You can also block cookies in your browser settings, though some parts of the site may not work as well.</p>` },
+  { id: 'keep', title: 'How long we keep information', html: `<p>We keep website form messages and visit data only as long as we need them for the purposes above, or as the law requires. Medical records are kept under Tennessee and federal rules for health records.</p>` },
+  { id: 'rights', title: 'Your rights', html: `<p>You can ask us what personal information we hold from this website, ask us to correct it, or ask us to delete it. Depending on where you live, you may have more rights under state law. To make a request, call us or use the contact form. We may need to confirm who you are first.</p><p>To see or get a copy of your <em>medical</em> records, follow the steps in our <a href="/notice-of-privacy-practices">Notice of Privacy Practices</a>.</p>` },
+  { id: 'children', title: 'Children', html: `<p>This website is for adults. We treat patients from age four, but parents or guardians should use the website on a child’s behalf. We do not knowingly collect personal information from children under 13 through the website. If you think a child gave us information, contact us and we will delete it.</p>` },
+  { id: 'security', title: 'Security', html: `<p>We use reasonable steps to protect information on our website. No website or internet transfer is completely secure, so we cannot promise absolute security.</p>` },
+  { id: 'links', title: 'Other websites', html: `<p>Our site links to other sites, such as our patient portal, the referral form and Google Maps. Their privacy practices are their own. Please read their policies.</p>` },
+  { id: 'changes', title: 'Changes to this policy', html: `<p>We may update this policy. We will post the new version here and change the “last updated” date.</p>` },
+  { id: 'contact', title: 'Contact us', html: `<p>Performance Therapy Institute<br />1646 Westgate Circle, Suite 106<br />Brentwood, TN 37027<br />Phone: 615-465-6810</p>` },
+];
 ---
-<PageLayout title="Privacy Policy">
-  <!-- TODO: legal review. No unfilled placeholders. -->
-  <div class="mx-auto max-w-3xl px-4 py-16"><p>Draft text.</p></div>
-</PageLayout>
+<LegalDoc
+  title="Privacy" accent="policy"
+  description="How Performance Therapy Institute collects, uses and protects information on this website."
+  updated="November 2, 2026"
+  lede="Plain-language details on what we collect on this website, why, and the choices you have."
+  sections={sections}
+/>

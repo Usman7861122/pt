@@ -1,0 +1,130 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import CtaBand from '../../components/sections/CtaBand.astro';
+import { site } from '../../data/site';
+
+const formsUrl = 'https://sa1s3optim.patientpop.com/assets/docs/451904.pdf'; // New patient forms PDF, from the old site
+const bring = [
+  'A prescription for physical therapy, if you have one, from your doctor, ARNP or PA',
+  'Your insurance card (we will make a copy)',
+  'Your new patient forms, printed and filled out',
+  'For a car accident or workers’ compensation claim: the case manager or adjuster’s name, phone number and your claim number',
+  'Comfortable clothes that let your therapist reach the sore area, and supportive sneakers',
+];
+const steps = [
+  ['Request an appointment', 'Call us or send a request. We will find a time that works.'],
+  ['Get a custom plan', 'Your therapist checks you and builds a plan for your pain and your goals.'],
+  ['Work hard, make progress', 'Visit by visit, you get stronger and the pain goes down.'],
+  ['Recover and enjoy life', 'Get back to what you love, with a home plan to keep you going.'],
+];
+const plans = ['Aetna', 'Alliance Healthcare', 'Ameriplan', 'Blue Cross Blue Shield', 'Bluegrass Family Health', 'Evolutions Healthcare Solutions', 'Fortified Provider Network', 'Health Management Network', 'HealthOne', 'Initial Group', 'Medicaid', 'Medicare', 'Next', 'OneNet / United Healthcare Company', 'Perdue Farms', 'PHCS', 'Premier Access', 'Premier Provider Network', 'Provider Select', 'R2R USA', 'Sieba Ltd', 'The Health Connection', 'Three Rivers Provider Network', 'Tricare Prime', 'USA Managed Care Organization', 'Windsor Health Plan', 'Workwell Systems'];
+const links = [
+  ['Direct Access', 'See a therapist without a referral', '/patient-info/direct-access'],
+  ['FAQs', 'Quick answers before your visit', '/faqs'],
+  ['Pay My Bill', 'Pay online in your patient portal', '/pay-my-bill'],
+  ['Reviews', 'What our patients say', '/testimonials'],
+  ['Referring providers', 'Send a referral online', 'https://performancetherapyinstitute.preferral.com/referral_wizard/1'],
+];
+const tel = `tel:${site.phone.replace(/[^0-9]/g, '')}`;
+---
+<PageLayout
+  title="Patient" accent="info"
+  eyebrow="Patient info and forms"
+  lede="Everything you need before your first visit: your forms, what to bring, how insurance works and how to pay."
+  description="Patient information for Performance Therapy Institute in Brentwood, Midtown Nashville and Nolensville, TN: new patient forms, what to bring, insurance accepted and payment options."
+  image="/images/coolsprings/coolsprings-people-12.webp" sideImage="/images/coolsprings/coolsprings-people-12.webp" sideAlt="A patient and therapist talking together before treatment"
+>
+  <!-- Before your first visit -->
+  <section class="section bg-cream">
+    <div class="container-x grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+      <div data-reveal>
+        <p class="eyebrow">Before your first visit</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Fill out your forms <em class="text-red">at home.</em></h2>
+        <p class="mt-5 text-lg leading-relaxed text-muted">We want to spend your time with us on treatment, not paperwork. Download the new patient forms, fill them out and bring them to your first appointment. If you cannot print them, come 15 minutes early and we will help.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={formsUrl} target="_blank" rel="noopener" class="btn btn-red">Download new patient forms (PDF)</a>
+          <a href={site.bookingUrl} class="btn btn-ghost-dark">Request an Appointment</a>
+        </div>
+      </div>
+      <div data-reveal style="--d:120ms" class="rounded-[10px] border border-navy/15 bg-white p-7 md:p-9">
+        <h3 class="font-display text-3xl text-navy">What to bring</h3>
+        <ul class="mt-5 space-y-3" role="list">
+          {bring.map((b) => (
+            <li class="flex gap-3 text-[17px] leading-relaxed text-navy/80">
+              <svg class="mt-1.5 shrink-0 text-red" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7" /></svg>{b}
+            </li>
+          ))}
+        </ul>
+        <p class="mt-6 border-t border-navy/10 pt-5 text-[15px] text-navy/60">Please arrive 15 minutes early so you can use your whole evaluation for care.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What to expect -->
+  <section data-spot class="section grain relative isolate overflow-hidden bg-navy-deep text-white" style="--glow: rgba(255,126,134,.12)">
+    <div class="spot-dots text-white/40" aria-hidden="true"></div>
+    <div class="spot-glow" aria-hidden="true"></div>
+    <div class="container-x relative z-10">
+      <div class="mx-auto max-w-3xl text-center" data-reveal>
+        <p class="eyebrow eyebrow-light">What to expect</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] md:text-5xl">Your path to <em class="text-[#FF7E86]">feeling better.</em></h2>
+        <p class="mx-auto mt-5 max-w-xl text-lg text-white/70">Most visits last 60 to 75 minutes, and you work one-on-one with your therapist. Your plan and number of visits are set at your first visit.</p>
+      </div>
+      <ol class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4" role="list">
+        {steps.map(([t, d], k) => (
+          <li data-reveal style={`--d:${k * 90}ms`} class="rounded-[10px] border border-white/15 bg-white/[.04] p-7">
+            <span class="font-display text-4xl italic text-[#FF7E86]" aria-hidden="true">{k + 1}</span>
+            <h3 class="font-display mt-3 text-2xl">{t}</h3>
+            <p class="mt-2 text-white/70">{d}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Insurance and payment -->
+  <section class="section bg-white">
+    <div class="container-x grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:gap-16">
+      <div data-reveal>
+        <p class="eyebrow">Insurance and payment</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">We help you <em class="text-red">understand your plan.</em></h2>
+        <p class="mt-5 text-lg leading-relaxed text-muted">We check your benefits for you, and we encourage you to check them too, so there are no surprises. We also accept MedPay from auto insurance and attorney liens. Out-of-network plans can be verified for you. Call <a class="underline decoration-red decoration-2 underline-offset-4" href="tel:6155515135">615-551-5135</a>.</p>
+        <dl class="mt-8 space-y-5 text-[17px] text-navy/80">
+          <div><dt class="font-semibold text-navy">How to pay</dt><dd>We accept cash, check, debit card and credit card. Payment is due at the time of service. We are glad to talk about payment plans.</dd></div>
+          <div><dt class="font-semibold text-navy">Your benefits</dt><dd>We learn what your plan covers before your second visit and tell you if you owe anything.</dd></div>
+          <div><dt class="font-semibold text-navy">No insurance?</dt><dd>We offer a discounted fee, due at the time of service.</dd></div>
+        </dl>
+        <a href="/pay-my-bill" class="btn btn-navy mt-8">Pay my bill online</a>
+      </div>
+      <div data-reveal style="--d:120ms">
+        <h3 class="font-display text-3xl text-navy">Plans we accept</h3>
+        <ul class="mt-5 flex flex-wrap gap-2" role="list">
+          {plans.map((p) => <li class="rounded-[6px] border border-navy/15 bg-cream px-3 py-1.5 text-[15px] text-navy/80">{p}</li>)}
+        </ul>
+        <p class="mt-5 text-sm text-navy/55">Plans can change. Please confirm your coverage with us before your visit.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- More help -->
+  <section class="section bg-cream">
+    <div class="container-x">
+      <div class="max-w-2xl" data-reveal>
+        <p class="eyebrow">More help</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Other things <em class="text-red">you may need.</em></h2>
+      </div>
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list">
+        {links.map(([t, d, h], k) => (
+          <li data-reveal style={`--d:${(k % 3) * 80}ms`}>
+            <a href={h} target={h.startsWith('http') ? '_blank' : undefined} rel={h.startsWith('http') ? 'noopener' : undefined} class="group flex h-full items-center justify-between gap-4 rounded-[10px] border border-navy/15 bg-white p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-red">
+              <span><span class="font-display block text-2xl text-navy">{t}</span><span class="mt-1 block text-[15px] text-muted">{d}</span></span>
+              <span aria-hidden="true" class="text-xl text-red transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand eyebrow="Ready when you are" title="Book your first" accent="visit." text="Call us or send a request. We will find a time and clinic that work for you." />
+</PageLayout>

@@ -1,0 +1,59 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import CtaBand from '../components/sections/CtaBand.astro';
+import { locations } from '../data/home';
+
+// Payment portals are from the old site (performnashville.com/pay-my-bill).
+// TODO: confirm which portal Midtown Nashville and Lymphedema & Cancer Care use (the old page listed Cool Springs, Brentwood and Nolensville).
+const portals = [
+  { name: 'Brentwood, Midtown Nashville and Lymphedema & Cancer Care', ids: ['brentwood', 'nashville', 'lymphedema'], url: 'https://performance-therapy-institute.patients.patientstudio.com/login' },
+  { name: 'Nolensville', ids: ['nolensville'], url: 'https://perform-physical-therapy-sag.patients.patientstudio.com/login' },
+];
+const tel = (p: string) => `tel:${p.replace(/[^0-9]/g, '')}`;
+---
+<PageLayout
+  title="Pay my" accent="bill"
+  eyebrow="Patient info"
+  lede="Pay online in your patient portal. Choose the clinic where you were seen."
+  description="Pay your bill online for Performance Therapy Institute in Brentwood, Midtown Nashville and Nolensville, TN."
+  image="/images/coolsprings/coolsprings-people-19.webp" sideImage="/images/coolsprings/coolsprings-people-19.webp" sideAlt="A smiling patient at a visit at Performance Therapy Institute"
+>
+  <section class="section bg-cream">
+    <div class="container-x">
+      <div class="max-w-2xl" data-reveal>
+        <p class="eyebrow">Pay online</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Choose your <em class="text-red">clinic.</em></h2>
+        <p class="mt-5 text-lg leading-relaxed text-muted">The button opens your secure patient portal in a new tab. You will sign in there. We never ask for your card number by email or text.</p>
+      </div>
+
+      <ul class="mt-10 grid gap-6 md:grid-cols-2" role="list">
+        {portals.map((p, k) => (
+          <li data-reveal style={`--d:${k * 100}ms`} class="flex flex-col rounded-[10px] border border-navy/15 bg-white p-8">
+            <p class="eyebrow">Patient portal</p>
+            <h3 class="font-display mt-4 text-3xl leading-tight text-navy">{p.name}</h3>
+            <ul class="mt-5 space-y-3 text-[16px] text-navy/75" role="list">
+              {p.ids.map((id) => {
+                const l = locations.find((x) => x.id === id)!;
+                return <li><span class="font-semibold text-navy">{l.name}</span><br />{l.address}, {l.city}<br /><a href={tel(l.phone)} class="underline decoration-red decoration-2 underline-offset-4 hover:text-red">{l.phone}</a></li>;
+              })}
+            </ul>
+            <a href={p.url} target="_blank" rel="noopener" class="btn btn-red mt-8 self-start">Pay now <span aria-hidden="true">↗</span></a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-10 grid gap-6 md:grid-cols-2" data-reveal>
+        <div class="rounded-[10px] border border-navy/15 bg-white/60 p-7">
+          <h3 class="font-display text-2xl text-navy">Questions about a bill?</h3>
+          <p class="mt-2 text-[17px] leading-relaxed text-muted">Call the clinic where you were seen. We can explain a charge, check your insurance or set up a payment plan.</p>
+        </div>
+        <div class="rounded-[10px] border border-navy/15 bg-white/60 p-7">
+          <h3 class="font-display text-2xl text-navy">Other ways to pay</h3>
+          <p class="mt-2 text-[17px] leading-relaxed text-muted">At the front desk we accept cash, check, debit and credit cards. Payment is due at the time of service. <a href="/patient-info" class="underline decoration-red decoration-2 underline-offset-4 hover:text-red">See insurance and payment info</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand eyebrow="Need care?" title="Ready for your next" accent="visit?" text="Request an appointment or call the clinic nearest you." />
+</PageLayout>

@@ -1,7 +1,27 @@
 ---
-import PageLayout from '../layouts/PageLayout.astro';
+import LegalDoc from '../components/sections/LegalDoc.astro';
+// DRAFT. TODO: have the clinic's lawyer review before launch.
+const sections = [
+  { id: 'agree', title: 'Using this website', html: `<p>These terms apply to your use of the Performance Therapy Institute website. By using the site, you agree to them. If you do not agree, please do not use the site.</p>` },
+  { id: 'medical', title: 'Not medical advice', html: `<p>The content on this website, including blog posts, videos and condition pages, is for general information only. It is not medical advice, a diagnosis or a treatment plan. Reading it does not create a therapist–patient relationship with us.</p><p>Always talk to a qualified health professional about your own situation. Never ignore medical advice or delay care because of something you read here.</p>` },
+  { id: 'emergency', title: 'In an emergency', html: `<p><strong>If you think you are having a medical emergency, call 911.</strong> Do not use this website or our forms for urgent problems.</p>` },
+  { id: 'appointments', title: 'Appointment requests', html: `<p>Sending a request through the website does not book an appointment. Your visit is confirmed only when our staff contacts you and confirms a date and time.</p>` },
+  { id: 'accuracy', title: 'Accuracy of information', html: `<p>We work to keep the site correct and current, but we cannot promise it is complete or free of errors. Hours, providers, insurance plans and services can change. Please call us to confirm.</p>` },
+  { id: 'ip', title: 'Our content', html: `<p>The text, images, logos, videos and design on this site belong to Performance Therapy Institute or our licensors and are protected by law. You may view and print pages for your own personal use. You may not copy, sell or reuse our content without our written permission.</p>` },
+  { id: 'use', title: 'Acceptable use', html: `<p>You agree not to:</p><ul><li>break the law or help someone else break it;</li><li>try to get into parts of the site or its systems you are not allowed to use;</li><li>send viruses, spam or harmful code;</li><li>use automated tools to copy the site in bulk;</li><li>pretend to be someone else, or send false information.</li></ul>` },
+  { id: 'submissions', title: 'What you send us', html: `<p>When you send us a message or application, you confirm the information is true and that you may share it. We will use it as described in our <a href="/privacy">Privacy Policy</a>. Please do not send sensitive health information through the website.</p>` },
+  { id: 'links', title: 'Other websites', html: `<p>Links to other sites, such as our patient portal and referral form, are for your convenience. We do not control those sites and are not responsible for them.</p>` },
+  { id: 'disclaimer', title: 'No warranties', html: `<p>The website is provided “as is” and “as available”. To the fullest extent the law allows, we do not make promises of any kind about it, including that it will always work or be free of errors.</p>` },
+  { id: 'liability', title: 'Limit of liability', html: `<p>To the fullest extent the law allows, Performance Therapy Institute is not responsible for indirect, incidental or consequential damages from your use of the website. Nothing here limits any rights you have under the law that cannot be limited, or our responsibilities to you as a patient.</p>` },
+  { id: 'law', title: 'Governing law', html: `<p>These terms are governed by the laws of the State of Tennessee. Any dispute about the website will be handled in the state or federal courts that serve Williamson County, Tennessee.</p>` },
+  { id: 'changes', title: 'Changes', html: `<p>We may change these terms. The new version takes effect when it is posted here. If you keep using the site, you accept the changes.</p>` },
+  { id: 'contact', title: 'Contact us', html: `<p>Performance Therapy Institute<br />1646 Westgate Circle, Suite 106<br />Brentwood, TN 37027<br />Phone: 615-465-6810</p>` },
+];
 ---
-<PageLayout title="Terms and Conditions">
-  <!-- TODO: legal review. No unfilled placeholders. -->
-  <div class="mx-auto max-w-3xl px-4 py-16"><p>Draft text.</p></div>
-</PageLayout>
+<LegalDoc
+  title="Terms &" accent="conditions"
+  description="Terms and conditions for using the Performance Therapy Institute website."
+  updated="November 2, 2026"
+  lede="The simple rules for using this website."
+  sections={sections}
+/>

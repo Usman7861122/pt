@@ -1,0 +1,29 @@
+---
+const pillars = [
+  { t: 'One-on-one care', d: 'You work with a licensed physical therapist who stays with you from your first visit to your last.', i: 'M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM22 21v-2a4 4 0 00-3-3.9M16 3.1a4 4 0 010 7.8' },
+  { t: 'Whole-body approach', d: 'We look for the cause of your pain and treat the whole person, not just the sore spot. We lean on movement, not on painkillers or surgery.', i: 'M20.8 4.6a5.5 5.5 0 00-7.800 0L12 5.700l-1.100-1.100a5.500 5.500 0 00-7.800 7.800l1.100 1.100L12 21l7.700-7.600 1.100-1.100a5.500 5.500 0 000-7.700z' },
+  { t: 'Hands-on therapy', d: 'Manual therapy and massage ease pain and restore motion, so exercises work better.', i: 'M18 11V6a2 2 0 00-4 0v5M14 10V4a2 2 0 00-4 0v6M10 10.500V6a2 2 0 00-4 0v8M18 8a2 2 0 014 0v6a8 8 0 01-8 8h-2c-2.800 0-4.500-.900-5.900-2.300L3.500 17.100a2 2 0 013-2.700L8 16' },
+  { t: 'Teaching and exercise', d: 'We teach you simple exercises that build strength, range of motion and balance, and help lower your risk of falls.', i: 'M22 12h-4l-3 9L9 3l-3 9H2' },
+];
+---
+<section class="section bg-white">
+  <div class="container-x">
+    <div class="mx-auto max-w-3xl text-center" data-reveal>
+      <p class="eyebrow">Our approach</p>
+      <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-6xl">Care that treats <em class="text-red">you,</em> not just your pain.</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-lg text-muted">We focus on sports injuries, gait and balance disorders and chronic pain, with special skill in back, neck, knee and shoulder pain.</p>
+    </div>
+    <ul class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" role="list">
+      {pillars.map((p, k) => (
+        <li data-reveal style={`--d:${k * 90}ms`} class="group relative overflow-hidden rounded-[10px] border border-navy/15 bg-cream/60 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-gold hover:bg-white hover:shadow-[0_30px_50px_-30px_rgba(20,33,61,.45)]">
+          <span aria-hidden="true" class="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-gold to-red transition-transform duration-700 group-hover:scale-x-100"></span>
+          <span class="grid h-12 w-12 place-items-center rounded-[10px] bg-red/[.07] text-red transition-colors duration-300 group-hover:bg-red group-hover:text-navy-deep">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={p.i} /></svg>
+          </span>
+          <h3 class="font-display mt-6 text-2xl text-navy">{p.t}</h3>
+          <p class="mt-3 text-[15px] leading-relaxed text-navy/70">{p.d}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

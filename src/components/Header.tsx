@@ -46,6 +46,17 @@ export default function Header({ nav, bookingUrl, lightHero = true }: Props) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const headerRef = useRef<HTMLElement>(null);
+  // Close the open menu when the visitor clicks or taps anywhere outside the header.
+  useEffect(() => {
+    if (menu === null) return;
+    const away = (e: Event) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) { setMenu(null); setHover(null); }
+    };
+    document.addEventListener('pointerdown', away);
+    return () => document.removeEventListener('pointerdown', away);
+  }, [menu]);
+
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { setOpen(false); setMenu(null); } };
@@ -72,6 +83,7 @@ export default function Header({ nav, bookingUrl, lightHero = true }: Props) {
   return (
     <>
       <header
+        ref={headerRef}
         onMouseLeave={scheduleClose}
         onMouseEnter={() => { if (closeT.current) { clearTimeout(closeT.current); closeT.current = null; } }}
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
@@ -184,7 +196,7 @@ export default function Header({ nav, bookingUrl, lightHero = true }: Props) {
                             {col.map((c, k) => (
                               <li key={c.href + c.label}>
                                 <a href={c.href} {...(c.external ? { target: '_blank', rel: 'noopener' } : {})} aria-current={!c.external && isActive(c.href) ? 'page' : undefined} className="group flex items-center gap-3.5 rounded-xl px-3 py-2.5 transition-colors hover:bg-cream">
-                                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[10px] bg-red/[.07] text-red transition-colors duration-300 group-hover:bg-red group-hover:text-white">
+                                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[10px] bg-red/[.07] text-red transition-colors duration-300 group-hover:bg-red group-hover:text-navy-deep">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={ICONS[(k + ci * 3) % ICONS.length]} /></svg>
                                   </span>
                                   <span className="min-w-0">
@@ -205,7 +217,7 @@ export default function Header({ nav, bookingUrl, lightHero = true }: Props) {
                           <p className="text-[11px] font-semibold uppercase tracking-[.2em] text-navy/50">Need help?</p>
                           <ul className="mt-3 grid gap-1 text-[14px] text-navy/85">
                             {[
-                              ['Find a clinic', '/contact', 'M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.800-7 11-7 11zM12 12a2 2 0 100-4 2 2 0 000 4z'],
+                              ['Find a clinic', '/#locations', 'M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.800-7 11-7 11zM12 12a2 2 0 100-4 2 2 0 000 4z'],
                               ['Patient reviews', '/testimonials', 'M12 2l3 6.900 7.500.7-5.700 5 1.700 7.400L12 18l-6.500 4 1.700-7.400-5.700-5 7.500-.7z'],
                               ['Insurance plans', '/patient-info', 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'],
                             ].map(([l, h, d]) => (

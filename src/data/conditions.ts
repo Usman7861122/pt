@@ -22,7 +22,7 @@ const stub = (title: string): ConditionContent => ({
   treatment: { nonSurgical: [], surgical: [] },
   livingWell: { tips: [] },
   faqs: [],
-  relatedServices: ['orthopedic-physical-therapy'],
+  relatedServices: ['back-pain'],
 });
 
 export const conditionGroups = [

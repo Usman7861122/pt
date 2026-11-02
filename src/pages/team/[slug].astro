@@ -1,0 +1,237 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { profiles } from '../../data/team';
+import { site } from '../../data/site';
+import { videos } from '../../data/videos';
+import VideoPlaylist from '../../components/home/VideoPlaylist.tsx';
+
+export function getStaticPaths() { return profiles.map((p) => ({ params: { slug: p.slug }, props: { p } })); }
+const { p } = Astro.props;
+const first = p.name.split(' ')[0];
+const last = p.name.split(' ').slice(1).join(' ');
+const tl = p.timeline ?? [];
+const same = profiles.filter((o) => o.slug !== p.slug && o.group === p.group);
+const others = same.slice(Math.max(0, profiles.filter((o) => o.group === p.group).findIndex((o) => o.slug === p.slug) - 1), undefined).concat(same).slice(0, 3);
+const icons = ["M12 2v20M8 6h8M8 12h8M8 18h8", "M9 3h6l1 5-2 3v10H10V11L8 8z", "M3 12h4l3-8 4 16 3-8h4", "M7 21l4-9-3-4 5-5 4 4-5 5", "M12 21s-7-4.500-7-11a4 4 0 017-2.500A4 4 0 0119 10c0 6.500-7 11-7 11z", "M13 2L4 14h7l-1 8 9-12h-7z"];
+const photos = [
+  { src: '/images/brentwood/brentwood-people-12.webp', alt: 'Therapists talking at the Brentwood clinic' },
+  { src: '/images/brentwood/brentwood-people-05.webp', alt: 'A therapist helping a patient with balance and walking' },
+  { src: '/images/brentwood/brentwood-people-09.webp', alt: 'Hands-on treatment at the Brentwood clinic' },
+  { src: '/images/brentwood/brentwood-02.webp', alt: 'The open therapy floor at Brentwood' },
+  { src: '/images/brentwood/brentwood-people-06.webp', alt: 'Patient practicing balance with support' },
+];
+---
+<BaseLayout title={`${p.name}, ${p.title}`} description={`${p.name}, ${p.title} at Performance Therapy Institute. ${p.intro}`} lightHero>
+  <!-- Hero -->
+  <section data-spot class="grain relative isolate overflow-hidden bg-navy-deep pb-20 pt-40 text-white md:pb-28 md:pt-48" style="--glow: rgba(183,157,110,.16)">
+    <div class="spot-dots text-white/40" aria-hidden="true"></div>
+    <div class="spot-glow" aria-hidden="true"></div>
+    <p aria-hidden="true" class="font-display pointer-events-none absolute -right-6 bottom-0 select-none text-[clamp(8rem,22vw,20rem)] italic leading-none text-white/[.03]">{last || first}</p>
+    <div class="container-x relative grid items-center gap-12 px-4 lg:grid-cols-[1.1fr_.9fr] lg:gap-20">
+      <div>
+        <nav aria-label="Breadcrumb" class="text-xs uppercase tracking-[.22em] text-white/60">
+          <a href="/" class="hover:text-white">Home</a> <span class="mx-2 text-gold">/</span>
+          <a href="/team" class="hover:text-white">Team</a> <span class="mx-2 text-gold">/</span> <span class="text-white/90">{p.name}</span>
+        </nav>
+        <p class="eyebrow eyebrow-light mt-8">{p.role}</p>
+        <h1 class="mt-5 text-[clamp(2.8rem,6vw,5.4rem)] font-medium leading-[1.02] tracking-tight">{first} <em class="text-[#FF7E86]">{last}</em></h1>
+        <p class="mt-4 text-sm uppercase tracking-[.22em] text-gold">{p.title}</p>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/75 md:text-xl">{p.intro}</p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a href={site.bookingUrl} class="btn btn-red">{p.group === 'clinical' ? `Book with ${first}` : 'Contact the clinic'}</a>
+          <a href="/team" class="btn btn-ghost-light">Meet the team</a>
+        </div>
+      </div>
+      <div class="relative mx-auto w-full max-w-md pb-6 pr-6 lg:max-w-none">
+        <div aria-hidden="true" class="absolute bottom-0 right-0 top-6 w-[calc(100%-1.5rem)] rounded-[10px] border border-gold/60"></div>
+        {p.photo && <img src={p.photo} alt={`Portrait of ${p.name}`} width="800" height="800" class="img-sq relative shadow-[0_50px_90px_-40px_rgba(0,0,0,.8)]" />}
+      </div>
+    </div>
+  </section>
+
+  <!-- Story + timeline -->
+  <section class="section bg-cream">
+    <div class="container-x grid gap-14 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
+      <div data-reveal>
+        <p class="eyebrow">{p.timeline ? "His story" : "Background"}</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">{p.storyHead[0]} <em class="text-red">{p.storyHead[1]}</em></h2>
+        <div class="mt-6 space-y-5 text-lg leading-relaxed text-navy/75">
+          {p.bio.map((t: string) => <p>{t}</p>)}
+        </div>
+      </div>
+      {!p.timeline && (
+        <aside class="self-start rounded-[10px] border border-navy/15 bg-white/60 p-8" data-reveal style="--d:120ms">
+          <p class="mb-6 text-xs uppercase tracking-[.28em] text-gold">At a glance</p>
+          <dl class="space-y-5">
+            <div><dt class="text-xs uppercase tracking-[.18em] text-muted">Role</dt><dd class="font-display mt-1 text-xl text-navy">{p.role}</dd></div>
+            {p.title && <div class="border-t border-navy/10 pt-5"><dt class="text-xs uppercase tracking-[.18em] text-muted">Credentials</dt><dd class="font-display mt-1 text-xl text-navy">{p.title}</dd></div>}
+            <div class="border-t border-navy/10 pt-5"><dt class="text-xs uppercase tracking-[.18em] text-muted">Practice</dt><dd class="font-display mt-1 text-xl text-navy">Performance Therapy Institute</dd></div>
+          </dl>
+          <a href="/#contact" class="btn btn-red mt-8 w-full">{p.group === 'clinical' ? `Book with ${first}` : 'Contact the clinic'}</a>
+        </aside>
+      )}
+      {p.timeline && (
+        <div class="relative" data-reveal style="--d:120ms">
+          <p class="mb-8 text-xs uppercase tracking-[.28em] text-gold">The path</p>
+          <ol data-timeline class="relative ml-3 space-y-14 pl-10" role="list">
+            <span aria-hidden="true" class="absolute -left-px bottom-2 top-2 w-px bg-navy/15"></span>
+            <span aria-hidden="true" data-tl-fill class="absolute -left-px bottom-2 top-2 w-px origin-top scale-y-0 bg-gradient-to-b from-gold to-red will-change-transform"></span>
+            {tl.map((t, i) => {
+              const now = i === tl.length - 1;
+              return (
+                <li data-tl-item class="group relative opacity-40 transition-all duration-700 data-[on]:opacity-100 data-[on]:translate-x-0 -translate-x-2">
+                  <span aria-hidden="true" class="absolute -left-[3.2rem] top-1.5 grid h-5 w-5 place-items-center rounded-full border border-navy/25 bg-cream transition-all duration-700 group-data-[on]:scale-125 group-data-[on]:border-red">
+                    <span class="h-2 w-2 rounded-full bg-navy/25 transition-colors duration-700 group-data-[on]:bg-red"></span>
+                    {now && <span class="absolute inset-0 animate-ping rounded-full border border-red/50"></span>}
+                  </span>
+                  <p class="font-display text-4xl leading-none text-navy transition-colors duration-700 group-data-[on]:text-red md:text-5xl">{t.year}</p>
+                  <span aria-hidden="true" class="mt-4 block h-px w-8 bg-gold transition-all duration-700 group-data-[on]:w-20"></span>
+                  <p class="font-display mt-4 text-xl text-navy">{t.label}</p>
+                  <p class="mt-1 text-sm uppercase tracking-[.16em] text-muted">{t.text}</p>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      )}
+    </div>
+  </section>
+
+  {p.focus && (
+    <section data-spot class="section grain relative isolate overflow-hidden bg-navy-deep text-white" style="--glow: rgba(183,157,110,.14)">
+      <div class="spot-dots text-white/40" aria-hidden="true"></div>
+      <div class="spot-glow" aria-hidden="true"></div>
+      <div class="container-x relative z-10 grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-16">
+        <div class="lg:sticky lg:top-32 lg:self-start" data-reveal>
+          <p class="eyebrow eyebrow-light">Where {first} can help</p>
+          <h2 class="mt-5 text-4xl font-medium leading-[1.06] md:text-5xl">Common reasons <em class="text-[#FF7E86]">patients see {first}.</em></h2>
+          <p class="mt-6 max-w-md text-lg leading-relaxed text-white/70">With a McKenzie certification, Josh looks for the movements that ease your pain, then teaches you how to use them on your own.</p>
+          <a href="/conditions" class="btn btn-ghost-light mt-8">See all conditions</a>
+        </div>
+        <ul class="grid gap-4 sm:grid-cols-2" role="list">
+          {p.focus.map((f, k) => (
+            <li data-reveal style={`--d:${(k % 2) * 90}ms`}>
+              <a href={f.href} class="group relative flex h-full flex-col overflow-hidden rounded-[10px] border border-white/15 bg-white/[.04] p-7 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/70 hover:bg-white/[.09] hover:shadow-[0_30px_50px_-30px_rgba(0,0,0,.7)]">
+                <span aria-hidden="true" class="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-gold to-red transition-transform duration-700 group-hover:scale-x-100"></span>
+                <span class="grid h-12 w-12 place-items-center rounded-[10px] border border-[#FF7E86]/60 bg-[#FF7E86]/10 text-[#FF7E86] transition-colors duration-300 group-hover:border-[#FF7E86] group-hover:bg-[#FF7E86] group-hover:text-navy-deep">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={icons[k % icons.length]} /></svg>
+                </span>
+                <h3 class="font-display mt-6 text-2xl">{f.label}</h3>
+                <p class="mt-2 flex-1 text-[15px] leading-relaxed text-white/65">{f.d}</p>
+                <span class="mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.18em] text-gold transition-all duration-300 group-hover:gap-3 group-hover:text-white">Learn more
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- Photos -->
+  {p.rich && (
+  <section class="section bg-cream">
+    <div class="container-x">
+      <div class="mx-auto max-w-3xl text-center" data-reveal>
+        <p class="eyebrow">In the clinic</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Care that is <em class="text-red">hands-on.</em></h2>
+      </div>
+      <div class="mt-12 grid auto-rows-[14rem] grid-cols-2 gap-3 md:auto-rows-[17rem] md:grid-cols-4">
+        {photos.map((ph, k) => (
+          <figure data-reveal style={`--d:${k * 70}ms`} class={`group relative overflow-hidden rounded-[10px] ${k === 0 ? 'col-span-2 row-span-2' : ''}`}>
+            <img src={ph.src} alt={ph.alt} loading="lazy" class="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-[1.06]" />
+            <span aria-hidden="true" class="absolute inset-3 rounded-[6px] border border-white/0 transition-all duration-700 group-hover:inset-4 group-hover:border-white/60"></span>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  )}
+
+  <!-- Videos -->
+  {p.rich && videos.length > 0 && (
+    <section data-spot class="section grain relative isolate overflow-hidden bg-navy text-white" style="--glow: rgba(255,126,134,.12)">
+      <div class="spot-dots text-white/40" aria-hidden="true"></div>
+      <div class="spot-glow" aria-hidden="true"></div>
+      <div class="container-x relative z-10">
+        <div class="mx-auto max-w-3xl text-center" data-reveal>
+          <p class="eyebrow eyebrow-light">Watch</p>
+          <h2 class="mt-5 text-4xl font-medium leading-[1.06] md:text-6xl">See the care <em class="text-[#FF7E86]">in action.</em></h2>
+          <p class="mx-auto mt-5 max-w-xl text-lg text-white/70">Short videos of the hands-on treatments and exercises we use every day.</p>
+        </div>
+        <div class="mt-12" data-reveal><VideoPlaylist client:visible videos={videos} /></div>
+      </div>
+    </section>
+  )}
+
+  <!-- Quotes -->
+  {p.quotes && (
+    <section class="section bg-white">
+      <div class="container-x">
+        <div class="mx-auto max-w-3xl text-center" data-reveal>
+          <p class="eyebrow">Patient words</p>
+          <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">What patients say about <em class="text-red">{first}.</em></h2>
+        </div>
+        <ul class="mx-auto mt-12 grid max-w-4xl gap-4 md:grid-cols-2" role="list">
+          {p.quotes.map((q: any) => (
+            <li data-reveal class="rounded-[10px] border border-navy/15 bg-cream/60 p-8">
+              <p class="font-display text-5xl leading-none text-gold">“</p>
+              <p class="font-display mt-2 text-2xl leading-snug text-navy">{q.text}</p>
+              <p class="mt-5 border-t border-navy/10 pt-4 text-xs uppercase tracking-[.2em] text-muted">{q.name}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- Other therapists -->
+  <section class="section bg-cream">
+    <div class="container-x">
+      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+        <h2 class="text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Meet more of <em class="text-red">the team.</em></h2>
+        <a href="/team" class="btn btn-ghost-dark">See everyone</a>
+      </div>
+      <ul class="mt-10 grid gap-6 sm:grid-cols-3" role="list">
+        {others.map((o) => (
+          <li data-reveal>
+            <a href={`/team/${o.slug}`} class="group block" aria-label={`${o.name}, ${o.title}`}>
+              <div class="overflow-hidden rounded-[10px] bg-navy">{o.photo && <img src={o.photo} alt="" loading="lazy" width="800" height="800" class="img-sq !rounded-none transition-transform duration-[1100ms] group-hover:scale-[1.06]" />}</div>
+              <p class="font-display mt-4 text-2xl text-navy">{o.name}</p>
+              <p class="text-xs uppercase tracking-[.2em] text-gold">{o.title}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  const tl = document.querySelector<HTMLElement>('[data-timeline]');
+  if (tl) {
+    const fill = tl.querySelector<HTMLElement>('[data-tl-fill]')!;
+    const items = [...tl.querySelectorAll<HTMLElement>('[data-tl-item]')];
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const r = tl.getBoundingClientRect();
+      const mark = innerHeight * 0.6;
+      const p = reduce ? 1 : Math.min(1, Math.max(0, (mark - r.top) / r.height));
+      fill.style.transform = `scaleY(${p})`;
+      const lineEnd = r.top + r.height * p;
+      items.forEach((li) => {
+        const dot = li.getBoundingClientRect().top + 14;
+        li.toggleAttribute('data-on', reduce || dot <= lineEnd + 2);
+      });
+    };
+    const req = () => { if (!raf) raf = requestAnimationFrame(update); };
+    addEventListener('scroll', req, { passive: true });
+    addEventListener('resize', req);
+    update();
+  }
+</script>

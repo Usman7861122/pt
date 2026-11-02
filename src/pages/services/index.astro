@@ -1,9 +1,56 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
-import ServicesGrid from '../../components/sections/ServicesGrid.astro';
-import Insurance from '../../components/sections/Insurance.astro';
-import WhyChoose from '../../components/sections/WhyChoose.astro';
+import { conditionPages } from '../../data/conditionPages';
+import { site } from '../../data/site';
+
+const order = ['shoulder-pain', 'sports-injuries', 'laser-therapy', 'knee-pain', 'back-pain', 'neck-pain', 'extracorporeal-shock-wave-therapy', 'gait-and-balance-disorder'];
+const items = order.map((s) => conditionPages.find((p) => p.base === 'services' && p.slug === s)!).filter(Boolean);
+const tel = `tel:${site.phone.replace(/[^0-9]/g, '')}`;
 ---
-<PageLayout title="Services" lede="Care plans built around you.">
-  <ServicesGrid title="All services" /><Insurance /><WhyChoose />
+<PageLayout
+  title="Therapy" accent="services"
+  eyebrow="Therapy services"
+  lede="Hands-on care and proven tools, matched to your goals. Pick a service to see how we can help you move and feel better."
+  description="Therapy services at Performance Therapy Institute in Brentwood, Midtown Nashville and Nolensville, TN: shoulder, knee, back and neck pain, sports injuries, laser therapy, shock wave therapy, and gait and balance care."
+  image="/images/nolensville/nolensville-people-03.webp" sideImage="/images/nolensville/nolensville-people-03.webp" sideAlt="Two therapists and a patient talking in a bright Nolensville clinic"
+>
+  <section class="section bg-cream">
+    <div class="container-x">
+      <div data-reveal>
+        <p class="eyebrow">{items.length} services</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Care built <em class="text-red">around you.</em></h2>
+      </div>
+
+      <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" role="list">
+        {items.map((c, k) => (
+          <li data-reveal style={`--d:${(k % 4) * 90}ms`}>
+            <a href={`/services/${c.slug}`} class="group flex h-full flex-col overflow-hidden rounded-[10px] border border-navy/15 bg-white transition-all duration-500 hover:-translate-y-1 hover:border-red hover:shadow-[0_30px_50px_-30px_rgba(20,33,61,.45)]">
+              <div class="relative overflow-hidden">
+                <img src={c.images[0].src} alt={c.images[0].alt} loading="lazy" width="800" height="600" class="aspect-[4/3] w-full object-cover transition-transform duration-[1100ms] group-hover:scale-[1.05]" />
+              </div>
+              <div class="flex flex-1 flex-col p-6">
+                <h3 class="font-display text-2xl text-navy">{c.title}</h3>
+                <p class="mt-2 text-[15px] leading-relaxed text-muted">{c.lede}</p>
+                <span class="btn btn-ghost-dark mt-5 self-start !min-h-[40px] !px-4 !py-2 text-sm">Learn more <span aria-hidden="true">→</span></span>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section data-spot class="section grain relative isolate overflow-hidden bg-navy-deep text-white" style="--glow: rgba(255,126,134,.12)">
+    <div class="spot-dots text-white/40" aria-hidden="true"></div>
+    <div class="spot-glow" aria-hidden="true"></div>
+    <div class="container-x relative z-10 mx-auto max-w-3xl text-center" data-reveal>
+      <p class="eyebrow eyebrow-light">Not sure which one you need?</p>
+      <h2 class="mt-5 text-4xl font-medium leading-[1.06] md:text-5xl">Start with a visit. <em class="text-[#FF7E86]">We'll guide you.</em></h2>
+      <p class="mx-auto mt-5 max-w-xl text-lg text-white/70">Your therapist will find the cause of your pain and choose the right mix of services for you. You do not need to know the answer first.</p>
+      <div class="mt-9 flex flex-wrap justify-center gap-3">
+        <a href={site.bookingUrl} class="btn btn-red">Request an Appointment</a>
+        <a href={tel} class="btn btn-ghost-light">Call {site.phone}</a>
+      </div>
+    </div>
+  </section>
 </PageLayout>

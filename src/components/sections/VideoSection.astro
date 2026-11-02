@@ -3,13 +3,13 @@ import VideoPlaylist from '../home/VideoPlaylist.tsx';
 import { videos } from '../../data/videos';
 ---
 {videos.length > 0 && (
-  <section id="videos" data-spot class="section relative isolate overflow-hidden bg-navy text-white grain" style="--glow: rgba(200,32,45,.12)">
+  <section id="videos" data-spot class="section relative isolate overflow-hidden bg-navy text-white grain" style="--glow: rgba(255,126,134,.12)">
     <div class="spot-dots text-white/40" aria-hidden="true"></div>
     <div class="spot-glow" aria-hidden="true"></div>
     <div class="container-x relative z-10">
       <div class="mx-auto max-w-3xl text-center" data-reveal>
         <p class="eyebrow eyebrow-light">Watch</p>
-        <h2 class="mt-5 text-4xl font-medium leading-[1.06] md:text-6xl">Treatments, <em class="text-[#ff7d85]">step by step.</em></h2>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] md:text-6xl">Treatments, <em class="text-[#FF7E86]">step by step.</em></h2>
         <p class="mx-auto mt-5 max-w-xl text-lg text-white/70">Quick, easy-to-follow videos on the treatments and exercises we use every day.</p>
       </div>
       <div class="mt-12" data-reveal><VideoPlaylist client:visible videos={videos} /></div>

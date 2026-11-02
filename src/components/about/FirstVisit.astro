@@ -1,0 +1,27 @@
+---
+// Draft copy. TODO: confirm with the clinic.
+const steps = [
+  { t: 'Tell us your story', d: 'We listen to your pain, your goals and what you want to get back to.' },
+  { t: 'A hands-on check', d: 'Your therapist looks at how you move to find the real cause.' },
+  { t: 'Your plan', d: 'You get a clear plan, made just for you, and the first treatment begins.' },
+  { t: 'Move better', d: 'Visit by visit, you get stronger, and we teach you how to keep it that way.' },
+];
+---
+<section class="section bg-white">
+  <div class="container-x">
+    <div class="mx-auto max-w-3xl text-center" data-reveal>
+      <p class="eyebrow">Your first visit</p>
+      <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-6xl">What to <em class="text-red">expect.</em></h2>
+    </div>
+    <ol class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4" role="list">
+      {steps.map((s, k) => (
+        <li data-reveal style={`--d:${k * 90}ms`} class="relative border-t border-navy/20 pt-6">
+          <span aria-hidden="true" class="absolute -top-px left-0 h-px w-12 bg-red"></span>
+          <p class="font-display text-5xl text-gold/80">{String(k + 1).padStart(2, '0')}</p>
+          <h3 class="font-display mt-4 text-2xl text-navy">{s.t}</h3>
+          <p class="mt-3 text-[15px] leading-relaxed text-navy/70">{s.d}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

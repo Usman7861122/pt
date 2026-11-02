@@ -1,0 +1,214 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import GalleryGrid from '../../components/home/GalleryGrid.tsx';
+import { locations } from '../../data/home';
+import { locationPages } from '../../data/locationPages';
+import { areas } from '../../data/areas';
+import { conditionPages } from '../../data/conditionPages';
+import { profiles } from '../../data/team';
+import { site } from '../../data/site';
+
+export function getStaticPaths() {
+  return Object.keys(locationPages).map((id) => ({ params: { id }, props: { id } }));
+}
+const { id } = Astro.props as { id: string };
+const loc = locations.find((l) => l.id === id)!;
+const page = locationPages[id];
+const area = areas[id];
+const city = area?.city ?? loc.name;
+const town = loc.city.split(',')[0];
+const label = page.title ? loc.name : city;
+const tel = `tel:${loc.phone.replace(/[^0-9]/g, '')}`;
+const query = encodeURIComponent(`Performance Therapy Institute ${loc.address} ${loc.city}`);
+const dirUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
+const mapUrl = `https://www.google.com/maps?q=${query}&output=embed`;
+const providers = page.providers.map((s) => profiles.find((p) => p.slug === s)).filter(Boolean) as typeof profiles;
+const gallery = page.gallery.map((src, i) => ({ src, alt: `Inside our ${city} clinic, photo ${i + 1}`, place: loc.address, caption: i === 0 ? `Our ${city} clinic` : `Inside our ${city} clinic`, big: i === 0 }));
+const fmt = (t?: [number, number]) => { if (!t) return ''; const h = t[0] % 12 || 12; return `${h}:${String(t[1]).padStart(2, '0')} ${t[0] < 12 ? 'AM' : 'PM'}`; };
+
+const defaultConditions = [
+  ['ALS', conditionPages.some((p) => p.slug === 'als') ? `/conditions/als/${id}` : '/conditions/als'],
+  ['Ankle Pain', '/conditions/ankle-pain'], ['Arthritis', '/conditions/arthritis'], ['Back Pain', '/conditions/back-pain'],
+  ['Balance Disorders', '/conditions/balance-disorders'], ['Breast Cancer Rehabilitation', '/conditions/breast-cancer-rehabilitation'],
+  ['Chronic Pain', '/conditions/chronic-pain'], ['Dizziness', '/conditions/dizziness'], ['Elbow Pain', '/conditions/elbow-pain'],
+  ['Fibromyalgia', '/conditions/fibromyalgia'], ['Multiple Sclerosis', '/conditions/multiple-sclerosis'],
+];
+const defaultServices = [
+  ['Shoulder Pain', `/services/shoulder-pain/${id}`, 'Rotator cuff and mobility care'], ['Sports Injuries', '/services/sports-injuries', 'Safe return to your game'],
+  ['Laser Therapy', '/services/laser-therapy', 'Soothe pain and speed healing'], ['Knee Pain', '/services/knee-pain', 'Walk, climb and squat with ease'],
+  ['Back Pain', '/services/back-pain', 'Hands-on care for your spine'], ['Neck Pain', '/services/neck-pain', 'Loosen tight, achy necks'],
+  ['Shock Wave Therapy', '/services/extracorporeal-shock-wave-therapy', 'Sound waves for stubborn pain'], ['Gait and Balance', '/services/gait-and-balance-disorder', 'Walk with more confidence'],
+  ["Women's Health", '/womens-health', 'Pelvic health and pregnancy care'],
+];
+
+const conditionList = (page.conditions ?? defaultConditions) as [string, string, string?][];
+const serviceList = (page.services ?? defaultServices) as [string, string, string?][];
+---
+<PageLayout
+  title={page.title ?? "Physical therapy in"} accent={page.accent ?? city}
+  eyebrow={`Our clinic · ${loc.city}`}
+  lede={page.lede ?? `One-on-one, hands-on physical therapy at our ${city} clinic. Our ${city} team helps you move better, feel better and get back to the life you love.`}
+  description={`Performance Therapy Institute in ${loc.city}. Hours, address, phone, conditions treated, services, providers and photos of our ${city} clinic.`}
+  image={page.hero} sideImage={page.hero} sideAlt={page.heroAlt}
+  nearby={area ? `Patients are welcome from across ${city}, ${area.nearby.join(', ')} and ${area.area}.` : undefined}
+>
+  <!-- Visit us + hours -->
+  <section class="section bg-cream">
+    <div class="container-x grid items-start gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-14">
+      <div data-reveal>
+        <p class="eyebrow">Visit us</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Find us in <em class="text-red">{town}.</em></h2>
+        <address class="mt-6 text-xl not-italic leading-relaxed text-navy/80">{loc.address}<br />{loc.city}</address>
+        <dl class="mt-5 grid max-w-sm grid-cols-[auto_1fr] gap-x-6 gap-y-1 text-lg text-navy/75">
+          <dt class="text-navy/50">Phone</dt><dd><a href={tel} class="hover:text-red">{loc.phone}</a></dd>
+          <dt class="text-navy/50">Fax</dt><dd>{loc.fax}</dd>
+        </dl>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href={tel} class="btn btn-red">Call {loc.phone}</a>
+          <a href={dirUrl} target="_blank" rel="noopener" class="btn btn-ghost-dark">Get directions</a>
+          <a href={site.bookingUrl} class="btn btn-navy">Request an Appointment</a>
+        </div>
+        <div class="mt-8 overflow-hidden rounded-[10px] border border-navy/15">
+          <iframe title={`Map of the ${city} clinic`} src={mapUrl} loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="block h-[320px] w-full"></iframe>
+        </div>
+      </div>
+
+      <div data-reveal style="--d:120ms" class="rounded-[10px] border border-navy/15 bg-white p-7 shadow-[0_40px_70px_-45px_rgba(20,33,61,.5)] md:p-9">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <h3 class="font-display text-3xl text-navy">Working hours</h3>
+          <p id="open-badge" class="rounded-full border border-navy/15 px-4 py-1.5 text-sm font-semibold text-navy/70" aria-live="polite">Checking today…</p>
+        </div>
+        <p id="today-line" class="mt-4 text-lg text-navy/75">&nbsp;</p>
+        <ul id="hours" class="mt-5 divide-y divide-navy/10 border-y border-navy/10" role="list">
+          {page.hours.map((h, i) => (
+            <li data-day={i} data-open={h.open ? h.open[0] * 60 + h.open[1] : ''} data-close={h.close ? h.close[0] * 60 + h.close[1] : ''}
+                class="flex items-center justify-between gap-4 px-3 py-3 text-[17px] text-navy/75 transition-colors data-[today]:rounded-[6px] data-[today]:bg-red/15 data-[today]:font-semibold data-[today]:text-navy">
+              <span class="flex items-center gap-2">{h.day}<span data-tag class="hidden rounded bg-navy px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-white group-data-[today]:inline">Today</span></span>
+              <span>{h.open ? `${fmt(h.open)} – ${fmt(h.close)}` : 'Closed'}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-4 text-sm text-navy/50">Hours shown in Central Time. Call us for same-day questions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Conditions treated -->
+  <section class="section bg-white">
+    <div class="container-x">
+      <div class="mx-auto max-w-3xl text-center" data-reveal>
+        <p class="eyebrow">What we treat</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">{page.title ? 'Conditions we treat at' : 'Conditions treated in'} <em class="text-red">{label}.</em></h2>
+      </div>
+      <ul class="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" role="list">
+        {conditionList.map(([t, href], k) => (
+          <li data-reveal style={`--d:${(k % 3) * 80}ms`}>
+            <a href={href} class="group flex items-center justify-between gap-4 rounded-[10px] border border-navy/15 bg-cream px-6 py-5 text-lg font-medium text-navy transition-all duration-300 hover:-translate-y-0.5 hover:border-red hover:bg-white">
+              {t}<span aria-hidden="true" class="text-red transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="mt-10 text-center"><a href="/conditions" class="btn btn-ghost-dark">See all conditions</a></div>
+    </div>
+  </section>
+
+  <!-- Services offered -->
+  <section data-spot class="section grain relative isolate overflow-hidden bg-navy-deep text-white" style="--glow: rgba(255,126,134,.12)">
+    <div class="spot-dots text-white/40" aria-hidden="true"></div>
+    <div class="spot-glow" aria-hidden="true"></div>
+    <div class="container-x relative z-10">
+      <div class="mx-auto max-w-3xl text-center" data-reveal>
+        <p class="eyebrow eyebrow-light">Services offered</p>
+        <h2 class="mt-5 text-4xl font-medium leading-[1.06] md:text-5xl">{page.servicesTitle ?? 'Therapy services at our'} <em class="text-[#FF7E86]">{label} clinic.</em></h2>
+      </div>
+      <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list">
+        {serviceList.map(([t, href, d], k) => { const Tag = href ? 'a' : 'div'; return (
+          <li data-reveal style={`--d:${(k % 3) * 80}ms`}>
+            <Tag href={href || undefined} class="group block h-full rounded-[10px] border border-white/15 bg-white/[.04] p-7 transition-all duration-500 hover:-translate-y-1 hover:border-[#FF7E86]/70 hover:bg-white/[.08]">
+              <h3 class="font-display text-2xl">{t}</h3>
+              <p class="mt-2 text-white/65">{d}</p>
+              {href && <span class="mt-5 inline-block text-sm font-semibold uppercase tracking-[.16em] text-[#FF7E86]">Learn more →</span>}
+            </Tag>
+          </li>
+        ); })}
+      </ul>
+    </div>
+  </section>
+
+  {providers.length > 0 && (
+  <section class="section bg-cream">
+    <div class="container-x">
+      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+        <div>
+          <p class="eyebrow">Providers available</p>
+          <h2 class="mt-5 text-4xl font-medium leading-[1.06] text-navy md:text-5xl">Meet your <em class="text-red">{label} team.</em></h2>
+        </div>
+        <a href="/team" class="btn btn-ghost-dark">Meet the full team</a>
+      </div>
+      <ul class="mt-12 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4" role="list">
+        {providers.map((d, k) => (
+          <li data-reveal style={`--d:${(k % 4) * 70}ms`}>
+            <a href={`/team/${d.slug}`} class="group block" aria-label={`${d.name}, ${d.role}`}>
+              <div class="overflow-hidden rounded-[10px] bg-navy"><img src={d.photo} alt="" loading="lazy" width="600" height="600" class="img-sq !rounded-none transition-transform duration-[1100ms] group-hover:scale-[1.05]" /></div>
+              <h3 class="font-display mt-4 text-xl text-navy">{d.name}</h3>
+              <p class="mt-1 text-xs uppercase tracking-[.18em] text-gold">{d.title}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  )}
+
+  {gallery.length > 0 && (
+  <section class="section bg-white">
+    <div class="container-x" data-reveal>
+      <GalleryGrid client:visible images={gallery} title="Step" accent="inside" after={`our ${city} clinic.`} />
+    </div>
+  </section>
+  )}
+</PageLayout>
+
+<script>
+  // Highlights today's row and shows if the clinic is open right now (Central Time).
+  const list = document.getElementById('hours');
+  if (list) {
+    const now = new Date();
+    const parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(now);
+    const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '';
+    const dayIdx = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(get('weekday'));
+    const mins = (Number(get('hour')) % 24) * 60 + Number(get('minute'));
+    const rows = [...list.querySelectorAll<HTMLElement>('li[data-day]')];
+    const fmt = (m: number) => { const h = Math.floor(m / 60); return `${h % 12 || 12}:${String(m % 60).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`; };
+    const row = rows[dayIdx];
+    const badge = document.getElementById('open-badge');
+    const line = document.getElementById('today-line');
+    if (row) {
+      row.setAttribute('data-today', '');
+      row.classList.add('group');
+      row.querySelector('[data-tag]')?.classList.remove('hidden');
+      const open = Number(row.dataset.open || -1), close = Number(row.dataset.close || -1);
+      const isOpenDay = row.dataset.open !== '';
+      const dayName = row.querySelector('span')?.firstChild?.textContent ?? 'Today';
+      if (line) line.textContent = isOpenDay ? `Today, ${dayName}: ${fmt(open)} – ${fmt(close)}` : `Today, ${dayName}: closed`;
+      let msg = 'Closed now', tone = 'closed';
+      if (isOpenDay && mins >= open && mins < close) { msg = `Open now · closes ${fmt(close)}`; tone = 'open'; }
+      else {
+        let next: { name: string; open: number } | null = null;
+        for (let i = 0; i < 7 && !next; i++) {
+          const r = rows[(dayIdx + i) % 7];
+          if (r.dataset.open === '') continue;
+          const o = Number(r.dataset.open);
+          if (i === 0 && mins >= o) continue;
+          next = { name: i === 0 ? 'today' : i === 1 ? 'tomorrow' : (r.querySelector('span')?.firstChild?.textContent ?? ''), open: o };
+        }
+        if (next) msg = `Closed now · opens ${next.name} ${fmt(next.open)}`;
+      }
+      if (badge) {
+        badge.textContent = msg;
+        if (tone === 'open') badge.className = 'rounded-full border border-emerald-600/30 bg-emerald-50 px-4 py-1.5 text-sm font-semibold text-emerald-800';
+      }
+    }
+  }
+</script>

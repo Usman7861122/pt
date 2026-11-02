@@ -1,0 +1,16 @@
+---
+import ConditionTemplate from '../../components/conditions/ConditionTemplate.astro';
+import { conditionPages } from '../../data/conditionPages';
+import { areas } from '../../data/areas';
+
+export function getStaticPaths() {
+  return conditionPages
+    .filter((p) => p.base === 'services')
+    .flatMap((p) => [
+      { params: { slug: p.slug }, props: { page: p, area: null } },
+      ...p.locations.filter((id) => areas[id]).map((id) => ({ params: { slug: `${p.slug}/${id}` }, props: { page: p, area: { ...areas[id], id } } })),
+    ]);
+}
+const { page, area } = Astro.props as any;
+---
+<ConditionTemplate page={page} area={area} />
