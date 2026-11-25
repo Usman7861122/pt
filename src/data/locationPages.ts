@@ -61,10 +61,11 @@ export const locationPages: Record<string, LocationPage> = {
     providers: allClinical,
   },
   lymphedema: {
-    hero: '/images/conditions/breast-cancer-rehabilitation/breast-cancer-rehabilitation-hero.webp', // TODO: replace with a photo of Suite 125
-    heroAlt: 'A therapist guiding a woman through an arm exercise during cancer rehabilitation',
+    hero: '/images/lymphedema/lymphedema-treatment-room.webp',
+    heroAlt: 'A private treatment room with an adjustable therapy table and stool at the Lymphedema & Cancer Care clinic',
     hours: week([h(18), h(18), h(18), h(18), h(17)]), // TODO: placeholder, copied from the old Cool Springs clinic
-    gallery: [], // TODO: no photos of Suite 125 yet
+    // 5 photos: 1 large + 4 small, so the grid fills evenly. The sign on the building reads "NeuroSpine Institute". TODO: confirm with the clinic.
+    gallery: ['/images/lymphedema/lymphedema-exterior.webp', '/images/lymphedema/lymphedema-treatment-room-2.webp', '/images/lymphedema/lymphedema-scale.webp', '/images/lymphedema/lymphedema-entrance.webp', '/images/lymphedema/lymphedema-door.webp'],
     title: 'Lymphedema and', accent: 'cancer care',
     lede: 'Specialized therapy for swelling and recovery after cancer treatment, from certified lymphedema therapists at our Westgate Circle clinic in Brentwood.',
     intro: 'Our Lymphedema & Cancer Care clinic gives you a calm, private space for care that is built around your recovery.',
